@@ -46,7 +46,7 @@ class Parent(User):
     def setCName(self, cname):
         self.__childName = cname
         
-class Teacher(User):
+class Student(User):
     __parentName = ''
     def __init__(self, name = '', Id = '', pw = '', email = '', pName = ''):
         super.__init(name, Id, pw, email)
@@ -57,4 +57,15 @@ class Teacher(User):
     
     def setPName(self, pname):
         self.__parentName = pname
+        
+        
+def signIn(name, Id, pw, email):
+    if #교사 선택:
+        Teacher(name, id, pw, email)
+    elif # 학생 선택:
+        Student(name, id, pw, email)
+    else: # 학부모 선택
+        Parent(name, id, pw, email. pName)
+
+def login(id, pw):
     

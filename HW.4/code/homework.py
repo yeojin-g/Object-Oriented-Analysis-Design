@@ -3,7 +3,7 @@ class Homework:
     __homeworkContent = ""
     __submitStudentList = []
 
-    def __init__(self, title, content):
+    def __init__(self, title = '', content = ''):
         self.__homeworkTitle = title
         self.__homeworkContent = content
 
@@ -14,7 +14,7 @@ class Homework:
         return self.__homeworkContent
 
     def getPHomeworkList(self):
-        return self.__PersonalHomework
+        return self.__submitStudentList
 
     def setTitle(self, title):
         self.__homeworkTitle = title
@@ -22,10 +22,10 @@ class Homework:
     def setContent(self, content):
         self.__homeworkContent = content
 
-    def addPHomework(self, pHW)
+    def addPHomework(self, pHW):
+        self.__submitStudentList.append(pHW)
         
-    def delPHomework(self, pHW)
-        
-
-    title = property(getTitle, setTitle)
-    content = property(getContent, setContent)
+    def delPHomework(self, pHW):
+        idx= self.__submitStudentList.index(pHW)
+        delPHomework = self.__submitStudentList.pop(idx)
+        return delPHomework

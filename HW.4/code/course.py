@@ -8,13 +8,13 @@ class Course:
     __noticeList = []
 
 
-    def __init__(self, name, code, teacherName):
+    def __init__(self, name = '', code = '', teacherName = ''):
         self.__courseName = name
         self.__courseCode = code
-        self.__courseTeachdr = teacherName
+        self.__courseTeacher = teacherName
 
     def getCourseInfo(self):
-        return self.__courseName, self.__courseCode, self.__courseTeacher
+        return [self.__courseName, self.__courseCode, self.__courseTeacher]
 
     def getParentList(self):
         return self.__courseParentList
@@ -28,24 +28,28 @@ class Course:
     def getNoticeList(self):
         return self.__noticeList
 
-    def addParent(pr):
+    def addParent(self, pr):
         self.__courseParentList.append(pr)
 
-    def addStudent(std):
+    def addStudent(self, std):
         self.__courseStudentList.append(std)
 
-    def addHomework(hw):
+    def addHomework(self, hw):
         self.__homeworkList.append(hw)
 
-    def addNoticeList(nc):
+    def addNoticeList(self, nc):
         self.__noticeList.append(nc)
 
-    def setCourseInfo(nameAndCode):
+    def setCourseInfo(self, nameAndCode):
         self.__courseName = nameAndCode[0]
         self.__courseCode = nameAndCode[1]
 
-    def delHomework(hw):
-        self.__homeworkList.remove(hw)
-
-    def delNotice(nc):
-        self.__noticeList.remove(nc)
+    def delHomework(self, hw):
+        idx = self.__homeworkList.index(hw)
+        delHomework = self.__homeworkList.pop(idx)
+        return delHomework
+    
+    def delNotice(self, nc):
+        idx = self.__noticeList.index(nc)
+        delNotice = self.__noticeList.pop(idx)
+        return delNotice
