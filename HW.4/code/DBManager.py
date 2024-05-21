@@ -1,5 +1,3 @@
-import pymysql
-
 class DBmanager:
     def h():
         return;

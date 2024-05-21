@@ -1,9 +1,10 @@
-# 로그인 팝업창
-
 from PyQt5 import QtCore, QtWidgets
+from courseList import CourseList
 
 class UserLogin(object):
-    def setupUi(self, Dialog):
+    def setupUi(self, Dialog, mainWindow):
+        self.curPage = Dialog
+        self.mainWindow = mainWindow 
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 312)
         
@@ -41,8 +42,8 @@ class UserLogin(object):
         self.label_3.setObjectName("label_3")
 
         self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept) # type: ignore
-        self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
+        self.buttonBox.accepted.connect(self.courseList) # courseList 페이지로 전환하는 함수 연결
+        self.buttonBox.rejected.connect(self.cancelLogin) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -53,11 +54,21 @@ class UserLogin(object):
         self.label_3.setText(_translate("Dialog", "패스워드"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = UserLogin()
-    ui.setupUi(Dialog)
-    Dialog.show()
-    sys.exit(app.exec_())
+    def courseList(self): # courseList 페이지로 전환하는 함수
+        self.curPage.close()  
+        nextPage = CourseList()  
+        nextPage.setupUi(self.mainWindow)  
+        self.mainWindow.show()  
+        
+    def cancelLogin(self): # 취소 버튼 클릭 시 메인 윈도우 보여주는 함수
+        self.curPage.close()
+        self.mainWindow.show()
+
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     Dialog = QtWidgets.QDialog()
+#     ui = UserLogin()
+#     ui.setupUi(Dialog)
+#     Dialog.show()
+#     sys.exit(app.exec_())

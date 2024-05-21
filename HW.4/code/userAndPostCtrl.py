@@ -27,12 +27,12 @@ class UserAndPostCtrl:
         delNotice = course.delNotice(nc)
         return delNotice
     
-    def signIn(name, Id, pw, email):
-        if #교사 선택:
+    def signIn(rolenum, name, Id, pw, email): #roleNum 0: 교사 / 1: 학생 / 2: 학부모
+        if rolenum == 0:
             Teacher(name, Id, pw, email)
-        elif # 학생 선택:
+        elif rolenum == 1:
             Student(name, Id, pw, email)
-        else: # 학부모 선택
+        else:
             Parent(name, Id, pw, email. pName)
     
     def checkInfo(Id, pw): #Login
