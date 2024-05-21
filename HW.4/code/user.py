@@ -9,7 +9,7 @@ class User: # interface 역할
         userInfoArr = [self.__userName, self.__userID, self.__userPassword, self.__userEmail]
         return userInfoArr
     
-    def getCourseList(self):
+    def gedtCourseList(self):
         return self.__courseList
     
     def setUserInfo(self, infoList):
@@ -59,13 +59,3 @@ class Student(User):
         self.__parentName = pname
         
         
-def signIn(name, Id, pw, email):
-    if #교사 선택:
-        Teacher(name, id, pw, email)
-    elif # 학생 선택:
-        Student(name, id, pw, email)
-    else: # 학부모 선택
-        Parent(name, id, pw, email. pName)
-
-def login(id, pw):
-    
