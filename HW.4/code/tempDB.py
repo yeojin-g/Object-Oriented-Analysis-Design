@@ -1,10 +1,12 @@
 class TempDB:
     userList = {}
     
-    def addUser(self, id, User):
-        self.userList[id] = User
+    def addUser(self, Id, User):
+        self.userList[Id] = User
+        print(self.userList)
         
-    def searchUser(self, id):
-        if id in self.userList.keys:
-            return self.userList[id]
-        else: return False
+    def searchUser(self, Id):
+        if Id in self.userList.keys():
+            return self.userList[Id]
+        else: 
+            return False

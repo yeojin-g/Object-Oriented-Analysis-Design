@@ -5,6 +5,12 @@ class User: # interface 역할
     __userEmail = ''
     __courseList = []  # course 배열
     
+    def __init__(self, name = '', Id = '', pw = '', email = ''):
+        self.__userName = name
+        self.__userID = Id
+        self.__userPassword = pw
+        self.__userEmail = email
+    
     def getUserInfo(self):
         userInfoArr = [self.__userName, self.__userID, self.__userPassword, self.__userEmail]
         return userInfoArr
@@ -37,7 +43,7 @@ class Teacher(User):
 class Parent(User):
     __childName = ''
     def __init__(self, name = '', Id = '', pw = '', email = '', cName = ''):
-        super.__init__(name, Id, pw, email)
+        super().__init__(name, Id, pw, email)
         self.__childName = cName
     
     def getCName(self):
@@ -49,7 +55,7 @@ class Parent(User):
 class Student(User):
     __parentName = ''
     def __init__(self, name = '', Id = '', pw = '', email = '', pName = ''):
-        super.__init(name, Id, pw, email)
+        super().__init__(name, Id, pw, email)
         self.__parentName = pName
         
     def getPName(self):

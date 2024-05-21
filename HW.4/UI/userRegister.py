@@ -1,9 +1,13 @@
 # 회원가입 팝업창
 
+import os, sys
 from PyQt5 import QtCore, QtWidgets
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'code'))
+from userAndPostCtrl import UserAndPostCtrl
 
 class UserRegister(object):
     def setupUi(self, Dialog):
+        self.dialog = Dialog
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 314)
 
@@ -81,7 +85,7 @@ class UserRegister(object):
         self.radioButton_3.setObjectName("radioButton_3")
 
         self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept) # type: ignore
+        self.buttonBox.accepted.connect(self.loginLogic) # type: ignore
         self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
@@ -98,6 +102,28 @@ class UserRegister(object):
         self.radioButton_2.setText(_translate("Dialog", "학생"))
         self.radioButton_3.setText(_translate("Dialog", "학부모"))
 
+    def loginLogic(self):
+        Id = self.lineEdit.text()
+        pw = self.lineEdit_2.text()
+        name = self.lineEdit_3.text()
+        email = self.lineEdit_4.text()
+        roleNum = -1
+        
+        #역할 선택에 맞는 roleNum 설정
+        if self.radioButton.isChecked():
+            roleNum = 0
+        elif self.radioButton_2.isChecked():
+            roleNum = 1
+        elif self.radioButton_3.isChecked():
+            roleNum = 2
+        
+        userCrtl = UserAndPostCtrl() # ctrl 객체 생성
+        isSuccess = userCrtl.signIn(roleNum, name, Id, pw, email) # signIn 수행
+        
+        if isSuccess:
+            self.dialog.close()
+        
+        
 
 if __name__ == "__main__":
     import sys

@@ -57,12 +57,11 @@ class UserLogin(object):
     def courseList(self): # courseList 페이지로 전환하는 함수
         self.curPage.close()  
         nextPage = CourseList()  
-        nextPage.setupUi(self.mainWindow)  
-        self.mainWindow.show()  
-        
+        nextPage.setupUi(self.curPage)  
+        self.curPage.show()    
+
     def cancelLogin(self): # 취소 버튼 클릭 시 메인 윈도우 보여주는 함수
         self.curPage.close()
-        self.mainWindow.show()
 
 # if __name__ == "__main__":
 #     import sys

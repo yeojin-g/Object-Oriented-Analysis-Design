@@ -3,19 +3,22 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from userLogin import UserLogin
 from userRegister import UserRegister
-class MainWindow(object):
-    
-    def setupUi(self, MainWindow):
-        self.MainWindow = MainWindow 
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(503, 403)
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi()
+
+    def setupUi(self):
+        self.setObjectName("MainWindow")
+        self.resize(503, 403)
         
         # icon 넣기
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("./icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        MainWindow.setWindowIcon(icon)
+        self.setWindowIcon(icon)
 
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
 
         # 로그인 툴버튼
@@ -41,19 +44,19 @@ class MainWindow(object):
         self.label_image.setPixmap(self.pixmap) # 이미지 삽입을 위해 pixmap 사용
         self.label_image.setObjectName("label_image")
         
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        self.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi()
+        QtCore.QMetaObject.connectSlotsByName(self)
         
         self.connectButton()
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "투게더 러닝"))
+        self.setWindowTitle(_translate("MainWindow", "투게더 러닝"))
         self.toolButton.setText(_translate("MainWindow", "로그인"))
         self.toolButton_2.setText(_translate("MainWindow", "회원가입"))
         self.label.setText(_translate("MainWindow", "투게더 러닝"))
@@ -63,29 +66,23 @@ class MainWindow(object):
         self.toolButton_2.clicked.connect(self.signInPage)
         
     def loginPage(self): # 로그인 페이지로 전환하는 함수
-        self.MainWindow.close()
+        self.close()
         dialog = QtWidgets.QDialog()
         login = UserLogin()
-        login.setupUi(dialog, self.MainWindow)
+        login.setupUi(dialog, self)
         dialog.exec_()
         
     def signInPage(self): # 회원가입 페이지로 전환하는 함수
-        self.MainWindow.hide()
+        self.hide()
         dialog = QtWidgets.QDialog()
         signIn = UserRegister()
         signIn.setupUi(dialog)
         dialog.exec_()
-        self.MainWindow.show()
+        self.show()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    mainWindow = QtWidgets.QMainWindow()
-    ui = MainWindow()
-    ui.setupUi(mainWindow)
-    
-    userLogin = UserLogin()
-    userLogin.setupUi(QtWidgets.QDialog(), mainWindow)
-    
+    mainWindow = MainWindow()
     mainWindow.show()
     sys.exit(app.exec_())
