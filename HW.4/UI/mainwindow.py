@@ -1,9 +1,10 @@
 # 프로그램 실행시 첫 메인화면
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
-
-class Ui_MainWindow(object):
+from user_login import UserLogin
+from user_register import UserRegister
+class MainWindow(object):
+    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(503, 403)
@@ -28,7 +29,7 @@ class Ui_MainWindow(object):
 
         # "투게더 러닝" 라벨
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(220, 260, 61, 31))
+        self.label.setGeometry(QtCore.QRect(220, 260, 65, 31))
         self.label.setObjectName("label")
 
         # 이미지 삽입용 라벨
@@ -46,6 +47,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
+        self.connectButton()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -53,13 +56,30 @@ class Ui_MainWindow(object):
         self.toolButton.setText(_translate("MainWindow", "로그인"))
         self.toolButton_2.setText(_translate("MainWindow", "회원가입"))
         self.label.setText(_translate("MainWindow", "투게더 러닝"))
-
+        
+    def connectButton(self):
+        self.toolButton.clicked.connect(self.loginPage)
+        self.toolButton_2.clicked.connect(self.signInPage)
+        
+    def loginPage(self):
+        MainWindow.hide()
+        dialog = QtWidgets.QDialog()
+        login = UserLogin()
+        login.setupUi(dialog)
+        dialog.exec_()
+        
+    def signInPage(self):
+        MainWindow.hide()
+        dialog = QtWidgets.QDialog()
+        signIn = UserRegister()
+        signIn.setupUi(dialog)
+        dialog.exec_()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    mainWindow = QtWidgets.QMainWindow()
+    ui = MainWindow()
+    ui.setupUi(mainWindow)
+    mainWindow.show()
     sys.exit(app.exec_())

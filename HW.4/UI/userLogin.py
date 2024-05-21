@@ -1,8 +1,8 @@
 # 로그인 팝업창
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
-class Ui_Dialog(object):
+class UserLogin(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 312)
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
+    ui = UserLogin()
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
