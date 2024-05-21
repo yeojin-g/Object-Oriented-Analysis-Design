@@ -1,10 +1,14 @@
+import os
+import sys
 from PyQt5 import QtCore, QtWidgets
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'code'))
+from userAndPostCtrl import UserAndPostCtrl
 from courseList import CourseList
 
 class UserLogin(object):
-    def setupUi(self, Dialog, mainWindow):
+    def setupUi(self, Dialog, main):
         self.curPage = Dialog
-        self.mainWindow = mainWindow 
+        self.main = main
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 312)
         
@@ -12,7 +16,7 @@ class UserLogin(object):
         self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(30, 250, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
 
         # "로그인" 라벨
@@ -29,7 +33,7 @@ class UserLogin(object):
         self.lineEdit_2 = QtWidgets.QLineEdit(Dialog)
         self.lineEdit_2.setGeometry(QtCore.QRect(180, 150, 113, 21))
         self.lineEdit_2.setObjectName("lineEdit_2")
-        self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.PasswordEchoOnEdit) # 입력할 때만 문자를 표시하고, 수정 중에는 다른 문자를 표시합니다.
+        self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.PasswordEchoOnEdit)
 
         # "아이디" 라벨
         self.label_2 = QtWidgets.QLabel(Dialog)
@@ -42,8 +46,8 @@ class UserLogin(object):
         self.label_3.setObjectName("label_3")
 
         self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(self.courseList) # courseList 페이지로 전환하는 함수 연결
-        self.buttonBox.rejected.connect(self.cancelLogin) # type: ignore
+        self.buttonBox.accepted.connect(self.courseList)
+        self.buttonBox.rejected.connect(self.cancelLogin)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -53,21 +57,23 @@ class UserLogin(object):
         self.label_2.setText(_translate("Dialog", "아이디"))
         self.label_3.setText(_translate("Dialog", "패스워드"))
 
+    def courseList(self):
+        userCtrl = UserAndPostCtrl()
+        Id = self.lineEdit.text()
+        pw = self.lineEdit_2.text()
+        
+        loginSuccess = userCtrl.checkInfo(Id, pw)
+        
+        if loginSuccess:
+            self.curPage.close()
+             
+            nextPage = CourseList()  
+            nextPage.setupUi(self.main) 
+            QtWidgets.QMessageBox.information(self.curPage, 'Success', '로그인 성공.') 
+            self.main.show()
+        else:
+            QtWidgets.QMessageBox.warning(self.curPage, 'Error', '로그인 실패. 아이디와 비밀번호를 확인하세요.')
 
-    def courseList(self): # courseList 페이지로 전환하는 함수
-        self.curPage.close()  
-        nextPage = CourseList()  
-        nextPage.setupUi(self.curPage)  
-        self.curPage.show()    
-
-    def cancelLogin(self): # 취소 버튼 클릭 시 메인 윈도우 보여주는 함수
-        self.curPage.close()
-
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     Dialog = QtWidgets.QDialog()
-#     ui = UserLogin()
-#     ui.setupUi(Dialog)
-#     Dialog.show()
-#     sys.exit(app.exec_())
+    def cancelLogin(self):
+        self.curPage.reject()
+        self.main.show()

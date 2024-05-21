@@ -66,11 +66,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.toolButton_2.clicked.connect(self.signInPage)
         
     def loginPage(self): # 로그인 페이지로 전환하는 함수
-        self.close()
+        self.hide()
         dialog = QtWidgets.QDialog()
         login = UserLogin()
         login.setupUi(dialog, self)
         dialog.exec_()
+        
         
     def signInPage(self): # 회원가입 페이지로 전환하는 함수
         self.hide()

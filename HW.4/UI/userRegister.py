@@ -102,7 +102,7 @@ class UserRegister(object):
         self.radioButton_2.setText(_translate("Dialog", "학생"))
         self.radioButton_3.setText(_translate("Dialog", "학부모"))
 
-    def loginLogic(self):
+    def loginLogic(self): #Login logic
         Id = self.lineEdit.text()
         pw = self.lineEdit_2.text()
         name = self.lineEdit_3.text()
@@ -122,8 +122,6 @@ class UserRegister(object):
         
         if isSuccess:
             self.dialog.close()
-        
-        
 
 if __name__ == "__main__":
     import sys

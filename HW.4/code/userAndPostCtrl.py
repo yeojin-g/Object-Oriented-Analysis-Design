@@ -55,13 +55,22 @@ class UserAndPostCtrl:
             print(e)
             return False
     
-    # def checkInfo(self, Id, pw): #Login
-    #     try:
-    #         if # id in db, id and pw correct
-    #             return True
-    #         else: return False
-    #     except:
-    #         print('error')
-    #         return
+    def checkInfo(self, Id, pw): #Login
+        tempDB = TempDB()
+        try:
+            if tempDB.searchUser(Id):
+                curUser = tempDB.getUser(Id)
+                curPw = curUser.getUserInfo()[2]
+                if curPw == pw:
+                    return True
+                else: 
+                    print('비밀번호가 일치하지 않습니다.')
+                    return False
+            else: 
+                print('사용자 정보가 존재하지 않습니다.')
+                return False
+        except:
+            print('error')
+            return
             
             

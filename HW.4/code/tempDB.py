@@ -7,6 +7,11 @@ class TempDB:
         
     def searchUser(self, Id):
         if Id in self.userList.keys():
-            return self.userList[Id]
+            return True
         else: 
             return False
+        
+    def getUser(self, Id):
+        return self.userList[Id]
+
+        

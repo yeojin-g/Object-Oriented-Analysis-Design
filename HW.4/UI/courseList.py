@@ -6,6 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class CourseList(object):
     def setupUi(self, MainWindow):
+        self.MainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(503, 403)
         
@@ -41,10 +42,10 @@ class CourseList(object):
 
         # "클래스 목록" 라벨
         self.label_classList = QtWidgets.QLabel(self.centralwidget)
-        self.label_classList.setGeometry(QtCore.QRect(210, 80, 60, 16))
+        self.label_classList.setGeometry(QtCore.QRect(210, 80, 65, 16))
         self.label_classList.setObjectName("label_classList")
         
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
@@ -59,13 +60,3 @@ class CourseList(object):
         self.toolButton_createCourse.setText(_translate("MainWindow", "클래스 생성"))
         self.pushButton_enterClass.setText(_translate("MainWindow", "클래스 입장"))
         self.label_classList.setText(_translate("MainWindow", "클래스 목록"))
-
-
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     MainWindow = QtWidgets.QMainWindow()
-#     ui = CourseList()
-#     ui.setupUi(MainWindow)
-#     MainWindow.show()
-#     sys.exit(app.exec_())
