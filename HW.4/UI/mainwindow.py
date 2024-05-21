@@ -3,7 +3,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from userLogin import UserLogin
 from userRegister import UserRegister
-
 class MainWindow(object):
     
     def setupUi(self, MainWindow):
