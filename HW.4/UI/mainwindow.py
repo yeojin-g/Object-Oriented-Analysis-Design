@@ -1,8 +1,8 @@
 # 프로그램 실행시 첫 메인화면
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from user_login import UserLogin
-from user_register import UserRegister
+from userLogin import UserLogin
+from userRegister import UserRegister
 class MainWindow(object):
     
     def setupUi(self, MainWindow):
