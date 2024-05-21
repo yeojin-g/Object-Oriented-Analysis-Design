@@ -9,7 +9,6 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import *
 
 
 class Ui_MainWindow(object):
@@ -20,7 +19,7 @@ class Ui_MainWindow(object):
         icon.addPixmap(QtGui.QPixmap(":/icon/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
 
-        self.pixmap = QPixmap('icon.png') # 이미지 삽입
+        self.pixmap = QtGui.QPixmap('icon.png') # 이미지 삽입
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.toolButton = QtWidgets.QToolButton(self.centralwidget)
