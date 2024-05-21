@@ -3,7 +3,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
+class HomeworkListSudent(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(503, 403)
@@ -28,10 +28,10 @@ class Ui_MainWindow(object):
         self.label_homeworkList = QtWidgets.QLabel(self.centralwidget)
         self.label_homeworkList.setGeometry(QtCore.QRect(140, 70, 60, 16))
         self.label_homeworkList.setObjectName("label_homeworkList")
-        # 과제 목록용 listView
-        self.listView = QtWidgets.QListView(self.centralwidget)
-        self.listView.setGeometry(QtCore.QRect(140, 100, 256, 192))
-        self.listView.setObjectName("listView")
+        # 과제 목록용 listWidget
+        self.listWidget = QtWidgets.QListWidget(self.centralwidget)
+        self.listWidget.setGeometry(QtCore.QRect(140, 100, 256, 192))
+        self.listWidget.setObjectName("listWidget")
         # "내용 확인" 푸시 버튼
         self.pushButton_checkInfo = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_checkInfo.setGeometry(QtCore.QRect(140, 310, 113, 32))
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = HomeworkListSudent()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
