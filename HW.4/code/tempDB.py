@@ -3,7 +3,7 @@ from course import  Course
 class TempDB:
     userList = {}
     # courseList = {}
-    courseList = {'aa': Course('aa', 00), 'bb': Course('bb', 11)}
+    courseList = {'아무개영어학원': Course('아무개영어학원', 00, "Amu"), '길동수학학원': Course('길동수학학원', 11, "홍길동")}
 
     def addUser(self, Id, User):
         self.userList[Id] = User

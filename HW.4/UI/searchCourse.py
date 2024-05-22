@@ -79,6 +79,7 @@ class SearchCourse(object):
         if self.searchResult:
             self.tableWidget.setRowCount(1)
             self.tableWidget.setColumnCount(2)
+            self.tableWidget.setHorizontalHeaderLabels(['class name','teacher'])
             name_item = QtWidgets.QTableWidgetItem(self.searchResult.getCourseInfo()[0])
             teacher_item = QtWidgets.QTableWidgetItem(self.searchResult.getCourseInfo()[2])
             self.tableWidget.setItem(0, 0, name_item)  # 클래스 이름 열에 추가
