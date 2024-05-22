@@ -2,19 +2,26 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from registerHomework import RegisterHomework
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'code'))
+from course import Course
 
 
-class HomeworkListTeacher(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(503, 403)
+class HomeworkListTeacher(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi()
+
+    def setupUi(self):
+        self.setObjectName("MainWindow")
+        self.resize(503, 403)
         
         # icon 넣기
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icon/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        MainWindow.setWindowIcon(icon)
+        self.setWindowIcon(icon)
         
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
 
         # "클래스 이름" 라벨
@@ -38,38 +45,55 @@ class HomeworkListTeacher(object):
         self.listWidget.setObjectName("listWidget")
         
         # "과제 등록" 푸시버튼
-        self.pushButton_uploadHomework = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_uploadHomework.setGeometry(QtCore.QRect(140, 310, 113, 32))
-        self.pushButton_uploadHomework.setObjectName("pushButton_uploadHomework")
+        self.pushButton_registerHomework = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_registerHomework.setGeometry(QtCore.QRect(140, 310, 113, 32))
+        self.pushButton_registerHomework.setObjectName("pushButton_registerHomework")
 
         # "과제 채점" 푸시버튼
-        self.pushButton_grade = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_grade.setGeometry(QtCore.QRect(280, 310, 113, 32))
-        self.pushButton_grade.setObjectName("pushButton_grade")
+        self.pushButton_gradeHomework = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_gradeHomework.setGeometry(QtCore.QRect(280, 310, 113, 32))
+        self.pushButton_gradeHomework.setObjectName("pushButton_gradeHomework")
         
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        self.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(self)
+        QtCore.QMetaObject.connectSlotsByName(self)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.setWindowTitle(_translate("MainWindow", "투게더 러닝"))
         self.label_courseName.setText(_translate("MainWindow", "수학"))
         self.label_teacherName.setText(_translate("MainWindow", "홍길동"))
         self.label_homeworkList.setText(_translate("MainWindow", "과제 목록"))
-        self.pushButton_uploadHomework.setText(_translate("MainWindow", "등록"))
-        self.pushButton_grade.setText(_translate("MainWindow", "채점"))
+        self.pushButton_registerHomework.setText(_translate("MainWindow", "등록"))
+        self.pushButton_gradeHomework.setText(_translate("MainWindow", "채점"))
+
+    def connectButton(self):    # 버튼과 전환함수 연결
+        self.pushButton_resgisterHomework.clicked.connect(self.registerHomework)
+        self.pushButton_grade.clicked.connect(self.gradeHomework)
+
+    def registerHomework(self): # 과제 등록 페어지로 전환하는 함수
+        self.hide()
+        dialog = QtWidgets.QDialog()
+        register = RegisterHomework()
+        register.setupUi(dialog)
+        dialog.exec_()
+        self.show()
+
+    def showList(self):
+
+
+    def gradeHomework(self):
+        pass
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = HomeworkListTeacher()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    mainWindow = HomeworkListTeacher()
+    mainWindow.show()
     sys.exit(app.exec_())
+    

@@ -5,6 +5,7 @@ class PersonalHomework:
 
     def __init__(self, submitFile):
         self.__submitFile = submitFile
+        print("제출 파일이 선택되었습니다.")
 
     def setScore(self, score):
         self.__score = score
@@ -20,6 +21,3 @@ class PersonalHomework:
 
     def getComment(self):
         return self.__comment
-
-    score = property(getScore, setScore)
-    comment = property(getComment, setComment)
