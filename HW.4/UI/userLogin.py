@@ -61,13 +61,13 @@ class UserLogin(object):
         if loginSuccess:
             self.curPage.close()
 
-            dialog = QtWidgets.QDialog()
             nextPage = CourseList()
-            nextPage.setupUi(dialog, self.main)
-            dialog.show()
+            nextPage.setupUi(self.main)
             QtWidgets.QMessageBox.information(self.curPage, 'Success', '로그인 성공.')
+            self.main.show()
         else:
             QtWidgets.QMessageBox.warning(self.curPage, 'Error', '로그인 실패. 아이디와 비밀번호를 확인하세요.')
+
 
     def cancelLogin(self):
         self.curPage.reject()

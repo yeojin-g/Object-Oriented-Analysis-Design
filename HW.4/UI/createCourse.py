@@ -19,7 +19,7 @@ class CreateCourse(object):
 
         # "클래스 생성" 라벨
         self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(170, 40, 60, 16))
+        self.label.setGeometry(QtCore.QRect(170, 40, 80, 16))
         self.label.setObjectName("label")
 
         # 클래스 이름 입력용
@@ -34,12 +34,12 @@ class CreateCourse(object):
 
         # "클래스 이름" 라벨
         self.label_className = QtWidgets.QLabel(Dialog)
-        self.label_className.setGeometry(QtCore.QRect(110, 100, 60, 16))
+        self.label_className.setGeometry(QtCore.QRect(110, 100, 85, 16))
         self.label_className.setObjectName("label_className")
 
         # "확인 코드" 라벨
         self.label_classCode = QtWidgets.QLabel(Dialog)
-        self.label_classCode.setGeometry(QtCore.QRect(110, 140, 60, 16))
+        self.label_classCode.setGeometry(QtCore.QRect(110, 140, 80, 16))
         self.label_classCode.setObjectName("label_classCode")
 
         self.retranslateUi(Dialog)

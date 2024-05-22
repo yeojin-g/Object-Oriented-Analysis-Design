@@ -33,7 +33,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # "투게더 러닝" 라벨
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(220, 260, 65, 31))
+        self.label.setGeometry(QtCore.QRect(220, 260, 80, 31))
         self.label.setObjectName("label")
 
         # 이미지 삽입용 라벨
@@ -69,10 +69,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.hide()
         dialog = QtWidgets.QDialog()
         login = UserLogin()
-        login.setupUi(dialog, self.centralwidget)
+        login.setupUi(dialog, self)
         dialog.exec_()
-        
-        
+
     def signInPage(self): # 회원가입 페이지로 전환하는 함수
         self.hide()
         dialog = QtWidgets.QDialog()

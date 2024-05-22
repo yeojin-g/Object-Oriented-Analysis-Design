@@ -11,12 +11,12 @@ class CourseList(object):
         self.MainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(503, 403)
-        
+
         # icon 넣기
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icon/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
-        
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
@@ -44,9 +44,9 @@ class CourseList(object):
 
         # "클래스 목록" 라벨
         self.label_classList = QtWidgets.QLabel(self.centralwidget)
-        self.label_classList.setGeometry(QtCore.QRect(210, 80, 65, 16))
+        self.label_classList.setGeometry(QtCore.QRect(210, 80, 80, 16))
         self.label_classList.setObjectName("label_classList")
-        
+
         self.MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -63,7 +63,7 @@ class CourseList(object):
         self.toolButton_createCourse.setText(_translate("MainWindow", "클래스 생성"))
         self.pushButton_enterClass.setText(_translate("MainWindow", "클래스 입장"))
         self.label_classList.setText(_translate("MainWindow", "클래스 목록"))
-        
+
     def connectButton(self): # 버튼과 전환함수 연결
         self.toolButton_searchCourse.clicked.connect(self.searchCourse)
         self.toolButton_createCourse.clicked.connect(self.createCourse)
@@ -71,10 +71,10 @@ class CourseList(object):
     def searchCourse(self):
         self.MainWindow.hide()
 
-        self.nextPage = QtWidgets.QMainWindow()  # 새로운 메인 윈도우 생성
+        self.nextPage = QtWidgets.QMainWindow()
         nextPageUi = SearchCourse()
-        nextPageUi.setupUi(self.nextPage)  # 새로운 윈도우에 UI 설정
-        self.nextPage.show()  # 새로운 윈도우 보여주기
+        nextPageUi.setupUi(self.nextPage)
+        self.nextPage.show()
 
     def createCourse(self):
         self.MainWindow.hide()

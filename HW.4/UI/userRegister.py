@@ -56,7 +56,7 @@ class UserRegister(object):
 
         # "사용자 이름" 라벨
         self.label_4 = QtWidgets.QLabel(Dialog)
-        self.label_4.setGeometry(QtCore.QRect(90, 130, 65, 16))
+        self.label_4.setGeometry(QtCore.QRect(70, 130, 80, 16))
         self.label_4.setObjectName("label_4")
 
         # "이메일" 라벨
@@ -71,7 +71,7 @@ class UserRegister(object):
 
         # "사용자 유형" 라벨
         self.label_6 = QtWidgets.QLabel(Dialog)
-        self.label_6.setGeometry(QtCore.QRect(90, 190, 65, 16))
+        self.label_6.setGeometry(QtCore.QRect(60, 190, 80, 16))
         self.label_6.setObjectName("label_6")
 
         # "학생" 라디오버튼
@@ -81,7 +81,7 @@ class UserRegister(object):
 
         # "학부모" 라디오버튼
         self.radioButton_3 = QtWidgets.QRadioButton(Dialog)
-        self.radioButton_3.setGeometry(QtCore.QRect(280, 190, 61, 20))
+        self.radioButton_3.setGeometry(QtCore.QRect(280, 190, 70, 20))
         self.radioButton_3.setObjectName("radioButton_3")
 
         self.retranslateUi(Dialog)

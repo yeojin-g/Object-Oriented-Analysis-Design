@@ -34,10 +34,11 @@ class SearchCourse(object):
         self.pushButton_joinClass = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_joinClass.setGeometry(QtCore.QRect(190, 310, 113, 32))
         self.pushButton_joinClass.setObjectName("pushButton_joinClass")
+        self.pushButton_joinClass.clicked.connect(self.joinCourse)
 
         # "클래스 목록" 라벨
         self.label_classList = QtWidgets.QLabel(self.centralwidget)
-        self.label_classList.setGeometry(QtCore.QRect(210, 130, 60, 16))
+        self.label_classList.setGeometry(QtCore.QRect(210, 130, 80, 16))
         self.label_classList.setObjectName("label_classList")
 
         # 검색용 입력창
@@ -53,7 +54,7 @@ class SearchCourse(object):
 
         # "클래스 검색" 라벨
         self.label_searchClass = QtWidgets.QLabel(self.centralwidget)
-        self.label_searchClass.setGeometry(QtCore.QRect(210, 50, 60, 16))
+        self.label_searchClass.setGeometry(QtCore.QRect(210, 50, 80, 16))
         self.label_searchClass.setObjectName("label_searchClass")
         
         MainWindow.setCentralWidget(self.centralwidget)
@@ -84,6 +85,9 @@ class SearchCourse(object):
             teacher_item = QtWidgets.QTableWidgetItem(self.searchResult.getCourseInfo()[2])
             self.tableWidget.setItem(0, 0, name_item)  # 클래스 이름 열에 추가
             self.tableWidget.setItem(0, 1, teacher_item)  # 교사 이름 열에 추가
+
+    def joinCourse(self):
+        self.Mainwindow.close()
 
 
 if __name__ == "__main__":
