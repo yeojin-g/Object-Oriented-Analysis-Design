@@ -1,15 +1,19 @@
 from course import Course
+from tempDB import TempDB
 
 class CourseCtrl:
-    def createCourse(teacher, courseName, courseCode):
+    tempDB = TempDB()
+
+    def createCourse(self, teacher = '', courseName = '', courseCode = ''):
         newCourse = Course(courseName, courseCode, teacher)
+        self.tempDB.addCourse(courseName, newCourse)
         return newCourse
     
-    def searchCourse(courseName):
-        if #courseName in DB:
-            return True
-        else
-            # alert 존재하지 않는 course입니다
+    def searchCourse(self, courseName):
+        if self.tempDB.searchCourse(courseName):
+            return self.tempDB.getCourse(courseName)
+        else:
+            print("존재하지 않는 Course")
             return False
             
     def joinCourseS(self, course, student):

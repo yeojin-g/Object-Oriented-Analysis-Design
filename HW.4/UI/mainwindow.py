@@ -69,7 +69,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.hide()
         dialog = QtWidgets.QDialog()
         login = UserLogin()
-        login.setupUi(dialog, self)
+        login.setupUi(dialog, self.centralwidget)
         dialog.exec_()
         
         

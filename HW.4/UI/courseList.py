@@ -4,6 +4,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from searchCourse import SearchCourse
+from createCourse import CreateCourse
 
 class CourseList(object):
     def setupUi(self, MainWindow):
@@ -66,18 +67,24 @@ class CourseList(object):
     def connectButton(self): # 버튼과 전환함수 연결
         self.toolButton_searchCourse.clicked.connect(self.searchCourse)
         self.toolButton_createCourse.clicked.connect(self.createCourse)
-    
+
     def searchCourse(self):
-        self.MainWindow.close()
-             
-        nextPage = SearchCourse()  
-        nextPage.setupUi(self.MainWindow) 
-        # QtWidgets.QMessageBox.information(self.curPage, 'Success', '로그인 성공.') 
-        self.MainWindow.show()
-                
+        self.MainWindow.hide()
+
+        self.nextPage = QtWidgets.QMainWindow()  # 새로운 메인 윈도우 생성
+        nextPageUi = SearchCourse()
+        nextPageUi.setupUi(self.nextPage)  # 새로운 윈도우에 UI 설정
+        self.nextPage.show()  # 새로운 윈도우 보여주기
+
     def createCourse(self):
-        pass
-        
+        self.MainWindow.hide()
+
+        newDialog = QtWidgets.QDialog()
+        nextPage = CreateCourse()
+        nextPage.setupUi(newDialog)
+        newDialog.exec_()
+        self.MainWindow.show()
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

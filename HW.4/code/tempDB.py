@@ -1,6 +1,9 @@
+from course import  Course
+
 class TempDB:
     userList = {}
-    courseList = {}
+    # courseList = {}
+    courseList = {'aa': Course('aa', 00), 'bb': Course('bb', 11)}
 
     def addUser(self, Id, User):
         self.userList[Id] = User
@@ -20,7 +23,7 @@ class TempDB:
         print(self.courseList)
 
     def searchCourse(self, name):
-        if name in self.userList.keys():
+        if name in self.courseList.keys():
             return True
         else:
             return False

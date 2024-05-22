@@ -1,9 +1,12 @@
 # 클래스 생성용 팝업창
-
+import os, sys
 from PyQt5 import QtCore, QtGui, QtWidgets
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'code'))
+from courseCtrl import CourseCtrl
 
 class CreateCourse(object):
     def setupUi(self, Dialog):
+        self.Dialoge = Dialog
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 300)
 
@@ -40,9 +43,10 @@ class CreateCourse(object):
         self.label_classCode.setObjectName("label_classCode")
 
         self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept) # type: ignore
+        self.buttonBox.accepted.connect(self.createClass) # type: ignore
         self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -51,6 +55,14 @@ class CreateCourse(object):
         self.label_className.setText(_translate("Dialog", "클래스 이름"))
         self.label_classCode.setText(_translate("Dialog", "확인 코드"))
 
+    def createClass(self):
+        name = self.lineEdit_className.text()
+        code = self.lineEdit_classCode.text()
+
+        courseCtrl = CourseCtrl()
+        courseCtrl.createCourse(courseName=name, courseCode=code)
+
+        self.Dialoge.close()
 
 if __name__ == "__main__":
     import sys
