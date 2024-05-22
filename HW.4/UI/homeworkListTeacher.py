@@ -1,27 +1,24 @@
 # 클래스 입장시 나오는 메인화면 교사버전
 
-
+import os
+import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from registerHomework import RegisterHomework
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'code'))
 from course import Course
 
-
-class HomeworkListTeacher(QtWidgets.QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setupUi()
-
-    def setupUi(self):
-        self.setObjectName("MainWindow")
-        self.resize(503, 403)
+class HomeworkListTeacher(object):
+    def setupUi(self, MainWindow):
+        self.MainWindow = MainWindow
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(503, 403)
         
         # icon 넣기
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icon/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.setWindowIcon(icon)
+        MainWindow.setWindowIcon(icon)
         
-        self.centralwidget = QtWidgets.QWidget(self)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
         # "클래스 이름" 라벨
@@ -54,17 +51,18 @@ class HomeworkListTeacher(QtWidgets.QMainWindow):
         self.pushButton_gradeHomework.setGeometry(QtCore.QRect(280, 310, 113, 32))
         self.pushButton_gradeHomework.setObjectName("pushButton_gradeHomework")
         
-        self.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(self)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
-        self.setStatusBar(self.statusbar)
+        MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(self)
-        QtCore.QMetaObject.connectSlotsByName(self)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.connectButton()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("MainWindow", "투게더 러닝"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "투게더 러닝"))
         self.label_courseName.setText(_translate("MainWindow", "수학"))
         self.label_teacherName.setText(_translate("MainWindow", "홍길동"))
         self.label_homeworkList.setText(_translate("MainWindow", "과제 목록"))
@@ -72,19 +70,20 @@ class HomeworkListTeacher(QtWidgets.QMainWindow):
         self.pushButton_gradeHomework.setText(_translate("MainWindow", "채점"))
 
     def connectButton(self):    # 버튼과 전환함수 연결
-        self.pushButton_resgisterHomework.clicked.connect(self.registerHomework)
-        self.pushButton_grade.clicked.connect(self.gradeHomework)
+        self.pushButton_registerHomework.clicked.connect(self.registerHomework)
+        self.pushButton_gradeHomework.clicked.connect(self.gradeHomework)
 
     def registerHomework(self): # 과제 등록 페어지로 전환하는 함수
-        self.hide()
-        dialog = QtWidgets.QDialog()
-        register = RegisterHomework()
-        register.setupUi(dialog)
-        dialog.exec_()
-        self.show()
+        self.MainWindow.hide()
+
+        newDialog = QtWidgets.QDialog()
+        nextPage = RegisterHomework()
+        nextPage.setupUi(newDialog)
+        newDialog.exec_()
+        self.MainWindow.show()
 
     def showList(self):
-
+        pass
 
     def gradeHomework(self):
         pass
@@ -93,7 +92,9 @@ class HomeworkListTeacher(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    mainWindow = HomeworkListTeacher()
-    mainWindow.show()
+    MainWindow = QtWidgets.QMainWindow()
+    ui = HomeworkListTeacher()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
     sys.exit(app.exec_())
     

@@ -9,6 +9,7 @@ from personalHomework import PersonalHomework
 
 class SubmitHomework(QDialog):
     def setupUi(self, Dialog):
+        self.Dialog = Dialog
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 181)
 
@@ -41,7 +42,7 @@ class SubmitHomework(QDialog):
 
         self.retranslateUi(Dialog)
         self.buttonBox.accepted.connect(self.submit) # type: ignore
-        self.buttonBox.rejected.connect(self.cancel) # type: ignore
+        self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         self.pushButton_chooseFile.clicked.connect(self.chooseFile)
 
@@ -59,16 +60,18 @@ class SubmitHomework(QDialog):
             self.label_submitHomework.setText(fname[0])
             print('filepath : ', fname[0])
             print('filesort : ', fname[1])
-        return fname[0]
+            f = open(fname[0], 'r')
 
-    def submit(self):
-        phw = PersonalHomework(self.chooseFile)
+            with f:
+                data = f.read()
+        phw = PersonalHomework(data)
         print(phw.getFilename())
 
-        # 이전화면으로 돌아가는 함수
+    def submit(self):
+        #phw = PersonalHomework(self.chooseFile)
+        #print(phw.getFilename())
 
-    def cancel(self):
-        pass
+        self.Dialog.close()
 
 if __name__ == "__main__":
     import sys

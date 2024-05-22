@@ -9,7 +9,7 @@ from course import Course
 
 class RegisterHomework(object):
     def setupUi(self, Dialog):
-        self.dialog = Dialog
+        self.Dialog = Dialog
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 300)
 
@@ -57,7 +57,7 @@ class RegisterHomework(object):
 
         self.retranslateUi(Dialog)
         self.buttonBox.accepted.connect(self.registerLogic) # type: ignore
-        self.buttonBox.rejected.connect(self.cancelRegister) # type: ignore
+        self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -81,14 +81,11 @@ class RegisterHomework(object):
         cos.addHomework(hw)
         print(title)
         print(content)
-        # 이전 화면으로 돌아가는 함수
+
+        self.Dialog.close()
 
     def text_changed(self):
         text = self.textEdit_content.toPlainText()
-
-    def cancelRegister(self):
-        # 이전화면으로 돌아가는 함수
-        pass
 
 if __name__ == "__main__":
     import sys
