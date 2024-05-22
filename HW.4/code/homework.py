@@ -18,9 +18,11 @@ class Homework:
 
     def setTitle(self, title):
         self.__homeworkTitle = title
+        print("과제 제목이 변경되었습니다.")
 
     def setContent(self, content):
         self.__homeworkContent = content
+        print("과제 내용이 변경되었습니다.")
 
     def addPHomework(self, pHW):
         self.__submitStudentList.append(pHW)

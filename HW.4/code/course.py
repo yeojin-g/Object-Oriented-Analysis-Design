@@ -36,6 +36,7 @@ class Course:
 
     def addHomework(self, hw):
         self.__homeworkList.append(hw)
+        print("과제가 과제리스트에 등록되었습니다.")
 
     def addNoticeList(self, nc):
         self.__noticeList.append(nc)
