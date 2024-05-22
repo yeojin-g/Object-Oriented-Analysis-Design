@@ -3,6 +3,7 @@
 # 로그인한 사용자의 클래스 목록이 [클래스이름, 교사이름] 형식으로 tableWidget으로 나오고 선택해서 입장할 수 있게 할 예정
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from searchCourse import SearchCourse
 
 class CourseList(object):
     def setupUi(self, MainWindow):
@@ -52,6 +53,7 @@ class CourseList(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.connectButton()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -60,3 +62,27 @@ class CourseList(object):
         self.toolButton_createCourse.setText(_translate("MainWindow", "클래스 생성"))
         self.pushButton_enterClass.setText(_translate("MainWindow", "클래스 입장"))
         self.label_classList.setText(_translate("MainWindow", "클래스 목록"))
+        
+    def connectButton(self): # 버튼과 전환함수 연결
+        self.toolButton_searchCourse.clicked.connect(self.searchCourse)
+        self.toolButton_createCourse.clicked.connect(self.createCourse)
+    
+    def searchCourse(self):
+        self.MainWindow.close()
+             
+        nextPage = SearchCourse()  
+        nextPage.setupUi(self.MainWindow) 
+        # QtWidgets.QMessageBox.information(self.curPage, 'Success', '로그인 성공.') 
+        self.MainWindow.show()
+                
+    def createCourse(self):
+        pass
+        
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = CourseList()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
