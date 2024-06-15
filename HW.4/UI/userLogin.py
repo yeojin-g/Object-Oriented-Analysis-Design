@@ -60,7 +60,6 @@ class UserLogin(object):
 
         if loginSuccess:
             self.curPage.close()
-
             nextPage = CourseList()
             nextPage.setupUi(self.main)
             QtWidgets.QMessageBox.information(self.curPage, 'Success', '로그인 성공.')

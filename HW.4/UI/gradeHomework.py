@@ -61,8 +61,8 @@ class GradeHomework(object):
         self.label_homeworkTitle.setText(_translate("Dialog", "과제1")) # 과제 제목 임시로 지정
         self.label_studentName.setText(_translate("Dialog", "학생A"))    # 학생 이름 임시로 지정
         self.label_gradeHomework.setText(_translate("Dialog", "과제 채점"))
-        self.label_title.setText(_translate("Dialog", "점수"))
-        self.label_content.setText(_translate("Dialog", "코멘트"))
+        self.label_score.setText(_translate("Dialog", "점수"))
+        self.label_comment.setText(_translate("Dialog", "코멘트"))
 
 
 if __name__ == "__main__":
