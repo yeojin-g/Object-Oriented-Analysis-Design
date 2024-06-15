@@ -14,10 +14,10 @@ class MainWindow(QDialog):
         self.toolButton_register.clicked.connect(self.signInPage)
 
     def loginPage(self):
-        widget.setCurrentIndex(widget.currentIndex()+1)
+        widget.setCurrentWidget(loginWindow)
 
     def signInPage(self):
-        widget.setCurrentIndex(widget.currentIndex()+2)
+        widget.setCurrentWidget(signInWindow)
 
 class UserLogin(QDialog):
     def __init__(self) :
@@ -35,7 +35,7 @@ class UserLogin(QDialog):
 
         if loginSuccess:
             QtWidgets.QMessageBox.information(self, 'Success', '로그인 성공.')
-            widget.setCurrentIndex(widget.currentIndex()+2)
+            widget.setCurrentWidget(courseListWindow)
         else:
             QtWidgets.QMessageBox.warning(self, 'Error', '로그인 실패. 아이디와 비밀번호를 확인하세요.')
             self.show()
@@ -139,13 +139,13 @@ class HomeworkList_T(QDialog):
         super().__init__()
         loadUi("HomeworkList_teacher.ui", self)
         self.pushButton_registerHomework.clicked.connect(self.registerHWPage)
-        self.pushButton_registerHomework.clicked.connect(self.gradeHWPage)
+        self.pushButton_gradeHomework.clicked.connect(self.gradeHWPage)
     
     def registerHWPage(self):
-        widget.setCurrentIndex(widget.currentIndex()+2)
+        widget.setCurrentWidget(registerHWWindow)
 
     def gradeHWPage(self):
-        widget.setCurrentIndex(widget.currentIndex()+3)
+        widget.setCurrentWidget(gradeHWWindow)
 
 class HomeworkList_S(QDialog):
     def __init__(self) :
@@ -155,10 +155,10 @@ class HomeworkList_S(QDialog):
         self.pushButton_submit.clicked.connect(self.submitHWPage)
 
     def checkHWPage(self):
-        widget.setCurrentIndex(widget.currentIndex()+4)
+        pass
 
     def submitHWPage(self):
-        widget.setCurrentIndex(widget.currentIndex()+5)
+        widget.setCurrentWidget(submitHWWindow)
 
 class RegisterHW(QDialog):
     def __init__(self) :
@@ -168,10 +168,9 @@ class RegisterHW(QDialog):
         self.buttonBox.rejected.connect(self.cancelRegister)
 
     def successRegister(self):
-        widget.setCurrentIndex(widget.currentIndex()-2)
-
+        widget.setCurrentWidget(HWListTeacherWindow)
     def cancelRegister(self):
-        widget.setCurrentIndex(widget.currentIndex()-2)
+        widget.setCurrentWidget(HWListTeacherWindow)
 
 class GradeHW(QDialog):
     def __init__(self) :
@@ -181,10 +180,11 @@ class GradeHW(QDialog):
         self.buttonBox.rejected.connect(self.cancelGrade)
 
     def successGrade(self):
-        widget.setCurrentIndex(widget.currentIndex()-3)
+        widget.setCurrentWidget(HWListTeacherWindow)
 
     def cancelGrade(self):
-        widget.setCurrentIndex(widget.currentIndex()-3)
+        widget.setCurrentWidget(HWListTeacherWindow)
+
 
 class SubmitHW(QDialog):
     def __init__(self) :
@@ -198,10 +198,11 @@ class SubmitHW(QDialog):
         pass
 
     def successSubmit(self):
-        widget.setCurrentIndex(widget.currentIndex()-5)
+        widget.setCurrentWidget(HWListStudentWindow)
 
     def cancelSubmit(self):
-        widget.setCurrentIndex(widget.currentIndex()-5)
+        widget.setCurrentWidget(HWListStudentWindow)
+
         
 if __name__ == "__main__":
     import sys
