@@ -47,8 +47,8 @@ class UserRegister(QDialog):
     def __init__(self) :
         super().__init__()
         loadUi("user_register.ui", self)
-        self.buttonBox.accepted.connect(self.loginLogic) # type: ignore
-        self.buttonBox.rejected.connect(self.cancelRegister) # type: ignore
+        self.buttonBox.accepted.connect(self.loginLogic)
+        self.buttonBox.rejected.connect(self.cancelRegister)
 
     def loginLogic(self): #Login logic
         Id = self.lineEdit.text()
@@ -80,12 +80,20 @@ class CourseList(QDialog):
         loadUi("CourseList.ui", self)
         self.toolButton_searchClass.clicked.connect(self.searchClassPage)
         self.toolButton_createCourse.clicked.connect(self.createCoursePage)
+        self.pushButton_enterClass.clicked.connect(self.enterCoursePage)
 
     def searchClassPage(self):
         widget.setCurrentIndex(widget.currentIndex()+1)
 
     def createCoursePage(self):
         widget.setCurrentIndex(widget.currentIndex()+2)
+
+    def enterCoursePage(self):
+        # 사용자가 교사면
+        widget.setCurrentIndex(widget.currentIndex()+4)
+        # 사용자가 학생이면
+        # widget.setCurrentIndex(widget.currentIndex()+5)
+
 
 class SearchClass(QDialog):
     def __init__(self) :
@@ -104,8 +112,8 @@ class CreateClass(QDialog):
     def __init__(self) :
         super().__init__()
         loadUi("create_class.ui", self)
-        self.buttonBox.accepted.connect(self.createLogic) # type: ignore
-        self.buttonBox.rejected.connect(self.cancelCreate) # type: ignore
+        self.buttonBox.accepted.connect(self.createLogic)
+        self.buttonBox.rejected.connect(self.cancelCreate)
     
     def createLogic(self):  # 클래스 생성 logic
         widget.setCurrentIndex(widget.currentIndex()-2)
@@ -117,15 +125,83 @@ class WriteClasscode(QDialog):
     def __init__(self) :
         super().__init__()
         loadUi("write_classcode.ui", self)
-        self.buttonBox.accepted.connect(self.successJoin) # type: ignore
-        self.buttonBox.rejected.connect(self.cancelJoin) # type: ignore
+        self.buttonBox.accepted.connect(self.successJoin)
+        self.buttonBox.rejected.connect(self.cancelJoin)
     
     def successJoin(self):
-        widget.setCurrentIndex(widget.currentIndex()+1)
+        widget.setCurrentIndex(widget.currentIndex()+2)
 
     def cancelJoin(self):
         widget.setCurrentIndex(widget.currentIndex()-2)
 
+class HomeworkList_T(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("HomeworkList_teacher.ui", self)
+        self.pushButton_registerHomework.clicked.connect(self.registerHWPage)
+        self.pushButton_registerHomework.clicked.connect(self.gradeHWPage)
+    
+    def registerHWPage(self):
+        widget.setCurrentIndex(widget.currentIndex()+2)
+
+    def gradeHWPage(self):
+        widget.setCurrentIndex(widget.currentIndex()+3)
+
+class HomeworkList_S(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("HomeworkList_student.ui", self)
+        self.pushButton_checkInfo.clicked.connect(self.checkHWPage)
+        self.pushButton_submit.clicked.connect(self.submitHWPage)
+
+    def checkHWPage(self):
+        widget.setCurrentIndex(widget.currentIndex()+4)
+
+    def submitHWPage(self):
+        widget.setCurrentIndex(widget.currentIndex()+5)
+
+class RegisterHW(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("register_homework.ui", self)
+        self.buttonBox.accepted.connect(self.successRegister)
+        self.buttonBox.rejected.connect(self.cancelRegister)
+
+    def successRegister(self):
+        widget.setCurrentIndex(widget.currentIndex()-2)
+
+    def cancelRegister(self):
+        widget.setCurrentIndex(widget.currentIndex()-2)
+
+class GradeHW(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("grade_homework.ui", self)
+        self.buttonBox.accepted.connect(self.successGrade)
+        self.buttonBox.rejected.connect(self.cancelGrade)
+
+    def successGrade(self):
+        widget.setCurrentIndex(widget.currentIndex()-3)
+
+    def cancelGrade(self):
+        widget.setCurrentIndex(widget.currentIndex()-3)
+
+class submitHW(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("submit_homework.ui", self)
+        self.buttonBox.accepted.connect(self.successSubmit) # type: ignore
+        self.buttonBox.rejected.connect(self.cancelSubmit) # type: ignore
+        self.pushButton_chooseFile.clicked.connect(self.chooseFile)
+
+    def chooseFile(self): # 파일 선택 logic
+        pass
+
+    def successSubmit(self):
+        widget.setCurrentIndex(widget.currentIndex()-5)
+
+    def cancelSubmit(self):
+        widget.setCurrentIndex(widget.currentIndex()-5)
         
 if __name__ == "__main__":
     import sys
@@ -143,6 +219,10 @@ if __name__ == "__main__":
     searchClassWindow = SearchClass()
     createClassWindow = CreateClass()
     writeClasscodeWindow = WriteClasscode()
+    HWListTeacherWindow = HomeworkList_T()
+    HWListStudentWindow = HomeworkList_S()
+    registerHWWindow = RegisterHW()
+    gradeHWWindow = GradeHW()
 
     #Widget 추가
     widget.addWidget(mainWindow)
@@ -152,6 +232,10 @@ if __name__ == "__main__":
     widget.addWidget(searchClassWindow)
     widget.addWidget(createClassWindow)
     widget.addWidget(writeClasscodeWindow)
+    widget.addWidget(HWListTeacherWindow)
+    widget.addWidget(HWListStudentWindow)
+    widget.addWidget(registerHWWindow)
+    widget.addWidget(gradeHWWindow)
 
     #프로그램 화면을 보여주는 코드
     widget.setFixedHeight(400)
