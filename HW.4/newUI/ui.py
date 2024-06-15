@@ -90,9 +90,9 @@ class CourseList(QDialog):
 
     def enterCoursePage(self):
         # 사용자가 교사면
-        widget.setCurrentIndex(widget.currentIndex()+4)
+        widget.setCurrentWidget(HWListTeacherWindow)
         # 사용자가 학생이면
-        # widget.setCurrentIndex(widget.currentIndex()+5)
+        # widget.setCurrentWidget(HWListStudentWindow)
 
 
 class SearchClass(QDialog):
@@ -155,7 +155,7 @@ class HomeworkList_S(QDialog):
         self.pushButton_submit.clicked.connect(self.submitHWPage)
 
     def checkHWPage(self):
-        pass
+        widget.setCurrentWidget(checkHWWindow)
 
     def submitHWPage(self):
         widget.setCurrentWidget(submitHWWindow)
@@ -203,6 +203,23 @@ class SubmitHW(QDialog):
     def cancelSubmit(self):
         widget.setCurrentWidget(HWListStudentWindow)
 
+class HomeworkList_P(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("HomeworkList_parent.ui", self)
+        self.pushButton_checkInfo.clicked.connect(self.checkHWPage)
+
+    def checkHWPage(self):
+        widget.setCurrentWidget(checkHWWindow)
+
+class CheckHW(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("checkHomework.ui", self)
+        self.pushButton_downloadSubmitHW.clicked.connect(self.download)
+
+    def download(self): # 제출 과제 다운로드 logic
+        pass
         
 if __name__ == "__main__":
     import sys
@@ -225,6 +242,8 @@ if __name__ == "__main__":
     registerHWWindow = RegisterHW()
     gradeHWWindow = GradeHW()
     submitHWWindow = SubmitHW()
+    HWListParentWindow = HomeworkList_P()
+    checkHWWindow = CheckHW()
 
     #Widget 추가
     widget.addWidget(mainWindow)
@@ -239,6 +258,8 @@ if __name__ == "__main__":
     widget.addWidget(registerHWWindow)
     widget.addWidget(gradeHWWindow)
     widget.addWidget(submitHWWindow)
+    widget.addWidget(HWListParentWindow)
+    widget.addWidget(checkHWWindow)
 
     #프로그램 화면을 보여주는 코드
     widget.setFixedHeight(400)
