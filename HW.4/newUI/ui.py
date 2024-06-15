@@ -186,7 +186,7 @@ class GradeHW(QDialog):
     def cancelGrade(self):
         widget.setCurrentIndex(widget.currentIndex()-3)
 
-class submitHW(QDialog):
+class SubmitHW(QDialog):
     def __init__(self) :
         super().__init__()
         loadUi("submit_homework.ui", self)
@@ -223,6 +223,7 @@ if __name__ == "__main__":
     HWListStudentWindow = HomeworkList_S()
     registerHWWindow = RegisterHW()
     gradeHWWindow = GradeHW()
+    submitHWWindow = SubmitHW()
 
     #Widget 추가
     widget.addWidget(mainWindow)
@@ -236,6 +237,7 @@ if __name__ == "__main__":
     widget.addWidget(HWListStudentWindow)
     widget.addWidget(registerHWWindow)
     widget.addWidget(gradeHWWindow)
+    widget.addWidget(submitHWWindow)
 
     #프로그램 화면을 보여주는 코드
     widget.setFixedHeight(400)
