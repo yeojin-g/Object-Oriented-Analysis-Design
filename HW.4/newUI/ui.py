@@ -3,6 +3,8 @@ import os, sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.uic import loadUi
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'code'))
+from userAndPostCtrl import UserAndPostCtrl
 
 class MainWindow(QDialog):
     def __init__(self):
@@ -17,15 +19,12 @@ class MainWindow(QDialog):
     def signInPage(self):
         widget.setCurrentIndex(widget.currentIndex()+2)
 
-class CourseList(QDialog):
-    def __init__(self) :
-        super().__init__()
-        loadUi("CourseList", self)
-
 class UserLogin(QDialog):
     def __init__(self) :
         super().__init__()
         loadUi("user_login.ui", self)
+        self.buttonBox.accepted.connect(self.courseList)
+        self.buttonBox.rejected.connect(self.cancelLogin)
 
     def courseList(self):
         userCtrl = UserAndPostCtrl()
@@ -35,19 +34,21 @@ class UserLogin(QDialog):
         loginSuccess = userCtrl.checkInfo(Id, pw)
 
         if loginSuccess:
-            QtWidgets.QMessageBox.information(self.curPage, 'Success', '로그인 성공.')
-            widget.setCurrentIndex(widget.currentIndex()+2)  
+            QtWidgets.QMessageBox.information(self, 'Success', '로그인 성공.')
+            widget.setCurrentIndex(widget.currentIndex()+2)
         else:
-            QtWidgets.QMessageBox.warning(self.curPage, 'Error', '로그인 실패. 아이디와 비밀번호를 확인하세요.')
+            QtWidgets.QMessageBox.warning(self, 'Error', '로그인 실패. 아이디와 비밀번호를 확인하세요.')
+            self.show()
 
     def cancelLogin(self):
-        self.curPage.reject()
-        self.main.show()
+        widget.setCurrentIndex(widget.currentIndex()-1)
 
 class UserRegister(QDialog):
     def __init__(self) :
         super().__init__()
         loadUi("user_register.ui", self)
+        self.buttonBox.accepted.connect(self.loginLogic) # type: ignore
+        self.buttonBox.rejected.connect(self.cancelRegister) # type: ignore
 
     def loginLogic(self): #Login logic
         Id = self.lineEdit.text()
@@ -70,6 +71,61 @@ class UserRegister(QDialog):
         if isSuccess:
             widget.setCurrentIndex(widget.currentIndex()-2)
 
+    def cancelRegister(self):
+        widget.setCurrentIndex(widget.currentIndex()-2)
+
+class CourseList(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("CourseList.ui", self)
+        self.toolButton_searchClass.clicked.connect(self.searchClassPage)
+        self.toolButton_createCourse.clicked.connect(self.createCoursePage)
+
+    def searchClassPage(self):
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    def createCoursePage(self):
+        widget.setCurrentIndex(widget.currentIndex()+2)
+
+class SearchClass(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("SearchClass.ui", self)
+        self.pushButton_search.clicked.connect(self.searchLogic)
+        self.pushButton_joinClass.clicked.connect(self.joinLogic)
+
+    def searchLogic(self): # 클래스 검색 logic
+        pass
+
+    def joinLogic(self): # 클래스 가입 logic
+        widget.setCurrentIndex(widget.currentIndex()+2)
+
+class CreateClass(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("create_class.ui", self)
+        self.buttonBox.accepted.connect(self.createLogic) # type: ignore
+        self.buttonBox.rejected.connect(self.cancelCreate) # type: ignore
+    
+    def createLogic(self):  # 클래스 생성 logic
+        widget.setCurrentIndex(widget.currentIndex()-2)
+
+    def cancelCreate(self):
+        widget.setCurrentIndex(widget.currentIndex()-2)
+
+class WriteClasscode(QDialog):
+    def __init__(self) :
+        super().__init__()
+        loadUi("write_classcode.ui", self)
+        self.buttonBox.accepted.connect(self.successJoin) # type: ignore
+        self.buttonBox.rejected.connect(self.cancelJoin) # type: ignore
+    
+    def successJoin(self):
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    def cancelJoin(self):
+        widget.setCurrentIndex(widget.currentIndex()-2)
+
         
 if __name__ == "__main__":
     import sys
@@ -81,16 +137,25 @@ if __name__ == "__main__":
 
     #레이아웃 인스턴스 생성
     mainWindow = MainWindow()
-    loginwindow = UserLogin()
-    SignInwindow = User
+    loginWindow = UserLogin()
+    signInWindow = UserRegister()
+    courseListWindow = CourseList()
+    searchClassWindow = SearchClass()
+    createClassWindow = CreateClass()
+    writeClasscodeWindow = WriteClasscode()
 
     #Widget 추가
     widget.addWidget(mainWindow)
-    widget.addWidget(loginwindow)
+    widget.addWidget(loginWindow)
+    widget.addWidget(signInWindow)
+    widget.addWidget(courseListWindow)
+    widget.addWidget(searchClassWindow)
+    widget.addWidget(createClassWindow)
+    widget.addWidget(writeClasscodeWindow)
 
     #프로그램 화면을 보여주는 코드
     widget.setFixedHeight(400)
-    widget.setFixedWidth(600)
+    widget.setFixedWidth(500)
     widget.show()
 
     #프로그램을 이벤트루프로 진입시키는(프로그램을 작동시키는) 코드
