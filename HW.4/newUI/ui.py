@@ -6,7 +6,9 @@ from PyQt5.uic import loadUi
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'code'))
 from userAndPostCtrl import UserAndPostCtrl
 
-class MainWindow(QDialog):
+currentUserInfo = []
+
+class MainWindow(QDialog): # main창(first page)
     def __init__(self):
         super(MainWindow, self).__init__()
         loadUi("FirstPage.ui", self)
@@ -19,7 +21,7 @@ class MainWindow(QDialog):
     def signInPage(self):
         widget.setCurrentWidget(signInWindow)
 
-class UserLogin(QDialog):
+class UserLogin(QDialog): # Login창
     def __init__(self) :
         super().__init__()
         loadUi("user_login.ui", self)
@@ -43,7 +45,7 @@ class UserLogin(QDialog):
     def cancelLogin(self):
         widget.setCurrentIndex(widget.currentIndex()-1)
 
-class UserRegister(QDialog):
+class UserRegister(QDialog): # SignIn창
     def __init__(self) :
         super().__init__()
         loadUi("user_register.ui", self)
@@ -51,6 +53,7 @@ class UserRegister(QDialog):
         self.buttonBox.rejected.connect(self.cancelRegister)
 
     def loginLogic(self): #Login logic
+        global currentUserInfo
         Id = self.lineEdit.text()
         pw = self.lineEdit_2.text()
         name = self.lineEdit_3.text()
@@ -66,7 +69,9 @@ class UserRegister(QDialog):
             roleNum = 2
         
         userCrtl = UserAndPostCtrl() # ctrl 객체 생성
+        currentUserInfo = [roleNum, name, Id, pw, email]
         isSuccess = userCrtl.signIn(roleNum, name, Id, pw, email) # signIn 수행
+        print(currentUserInfo)
         
         if isSuccess:
             widget.setCurrentIndex(widget.currentIndex()-2)
@@ -74,7 +79,7 @@ class UserRegister(QDialog):
     def cancelRegister(self):
         widget.setCurrentIndex(widget.currentIndex()-2)
 
-class CourseList(QDialog):
+class CourseList(QDialog): # 현재 user가 속한 CourseList 보여주는 창
     def __init__(self) :
         super().__init__()
         loadUi("CourseList.ui", self)
@@ -82,20 +87,30 @@ class CourseList(QDialog):
         self.toolButton_createCourse.clicked.connect(self.createCoursePage)
         self.pushButton_enterClass.clicked.connect(self.enterCoursePage)
 
-    def searchClassPage(self):
-        widget.setCurrentIndex(widget.currentIndex()+1)
+    def searchClassPage(self): # 클래스 검색 
+        if currentUserInfo[0] == 0:
+            QtWidgets.QMessageBox.warning(self, 'Error', '사용할 수 없는 기능입니다.')
+            self.show()
+        else:    
+            widget.setCurrentIndex(widget.currentIndex()+1)
 
-    def createCoursePage(self):
-        widget.setCurrentIndex(widget.currentIndex()+2)
+    def createCoursePage(self): # 클래스 생성
+        if currentUserInfo[0] == 0:
+            widget.setCurrentIndex(widget.currentIndex()+2)
+        else:
+            QtWidgets.QMessageBox.warning(self, 'Error', '사용할 수 없는 기능입니다.')
+            self.show()
 
-    def enterCoursePage(self):
+    def enterCoursePage(self): # 클래스 입장
         # 사용자가 교사면
-        widget.setCurrentWidget(HWListTeacherWindow)
+        if currentUserInfo[0] == 0:
+            widget.setCurrentWidget(HWListTeacherWindow)
         # 사용자가 학생이면
-        # widget.setCurrentWidget(HWListStudentWindow)
+        elif currentUserInfo[0] == 1:
+            widget.setCurrentWidget(HWListStudentWindow)
 
 
-class SearchClass(QDialog):
+class SearchClass(QDialog): # 클래스 검색
     def __init__(self) :
         super().__init__()
         loadUi("SearchClass.ui", self)
