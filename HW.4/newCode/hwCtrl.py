@@ -3,7 +3,7 @@ from pHomework import PHomework
 from dbManager import DBManager
 from classCtrl import ClassCtrl
 
-class HwAndNcCtrl:
+class HwCtrl:
     dbCtrl = DBManager()
     classCtrl = ClassCtrl()
     
