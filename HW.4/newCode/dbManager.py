@@ -18,7 +18,7 @@ class DBManager:
     #     conn.execute('CREATE TABLE Homework_PHomework();')
     
     def searchUser(self, userId):
-        if userId in self.__userList.keys:
+        if userId in self.__userList.keys():
             return self.__userList[userId]
         else:
             return False
@@ -27,7 +27,7 @@ class DBManager:
         self.__userList[userId] = [roleNum, newUser]
         
     def searchClass(self, className):
-        if className in self.__classList.keys:
+        if className in self.__classList.keys():
             return self.__classList[className]
         else:
             return False
