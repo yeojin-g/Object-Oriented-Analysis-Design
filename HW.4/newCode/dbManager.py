@@ -19,7 +19,7 @@ class DBManager:
     
     def searchUser(self, userId):
         if userId in self.__userList.keys():
-            return self.__userList[userId]
+            return self.__userList[userId][1]
         else:
             return False
     
