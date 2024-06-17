@@ -153,10 +153,12 @@ class CreateClass(QDialog):
         self.buttonBox.rejected.connect(self.cancelCreate)
     
     def createLogic(self):  # 클래스 생성 logic
+        global currentUserInfo
+        
         classCtrl = ClassCtrl()
         name = self.lineEdit_className.text()
         code = self.lineEdit_classCode.text()
-        teacherId = currentUser.getInfoList()[0]
+        teacherId = currentUserInfo[2]
         classCtrl.makeClass(name, code, teacherId)
         widget.setCurrentIndex(widget.currentIndex()-2)
 
