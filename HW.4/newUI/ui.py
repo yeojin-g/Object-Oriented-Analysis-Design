@@ -89,11 +89,29 @@ class CourseList(QDialog): # 현재 user가 속한 CourseList 보여주는 창
         loadUi("CourseList.ui", self)
         self.toolButton_searchClass.clicked.connect(self.searchClassPage)
         self.toolButton_createCourse.clicked.connect(self.createCoursePage)
-        self.pushButton_enterClass.clicked.connect(self.enterCoursePage)
+        self.pushButton_enterClass.clicked.connect(self.enterClassPage)
         self.tableWidget.setColumnCount(2)
+        self.tableWidget.setRowCount(10)
         self.tableWidget.setHorizontalHeaderLabels(["클래스 이름", "교사 이름"])
-        self.setTable()
+        for r in range(self.tableWidget.rowCount()):
+            for c in range(self.tableWidget.columnCount()):
+                index = 0
+                # 테이블위젯아이템 생성
+                item = QTableWidgetItem()
+                # 아이템에 데이터 삽입
+                item.setText(currentUser.getClassList.getClassInfo()[index])
+                index += 2
+                # 아이템을 테이블에 세팅
+                self.tableWidget.setItem(r, c, item)
+                print(r)
+                print(c)
+                print(item)
         self.tableWidget.currentCellChanged.connect(self.currentcellchanged_event)
+        widget.update()
+        widget.currentChanged.connect(self.widgetUpdate)
+
+    def widgetUpdate(self):
+        widget.update()
 
     def currentcellchanged_event(self, row, col, pre_row, pre_col):
         current_data = self.tableWidget.item(row, col) # 현재 선택 셀 값
@@ -104,17 +122,6 @@ class CourseList(QDialog): # 현재 user가 속한 CourseList 보여주는 창
             print("이전 선택 셀 값 : 없음")
 
         print("현재 선택 셀 값 : ", current_data.text())
-
-    def setTable(self):
-        for r in range(len(currentUser.getClassList())):
-            self.tableWidget.insertRow(r)
-            for c in range(self.tableWidget.columnCount()):
-                # 테이블위젯아이템 생성
-                item = QTableWidgetItem()
-                # 아이템에 데이터 삽입
-                item.setText(currentUser.getClassList.getClassInfo()[0])
-                # 아이템을 테이블에 세팅
-                self.tableWidget.setItem(r, c, item)
 
     def searchClassPage(self): # 클래스 검색 
         if currentUserInfo[0] == 0:
@@ -130,13 +137,16 @@ class CourseList(QDialog): # 현재 user가 속한 CourseList 보여주는 창
             QtWidgets.QMessageBox.warning(self, 'Error', '사용할 수 없는 기능입니다.')
             self.show()
 
-    def enterCoursePage(self): # 클래스 입장
+    def enterClassPage(self): # 클래스 입장
         # 사용자가 교사면
         if currentUserInfo[0] == 0:
             widget.setCurrentWidget(HWListTeacherWindow)
         # 사용자가 학생이면
         elif currentUserInfo[0] == 1:
             widget.setCurrentWidget(HWListStudentWindow)
+        # 사용자가 부모이면
+        elif currentUserInfo[0] == 2:
+            widget.setCurrentWidget(HWListParentWindow)
 
 
 class SearchClass(QDialog): # 클래스 검색
@@ -168,6 +178,10 @@ class CreateClass(QDialog):
         teacherId = currentUserInfo[2]
         classCtrl.makeClass(name, code, teacherId)
         widget.setCurrentIndex(widget.currentIndex()-2)
+        widget.currentChanged.connect(self.widgetUpdate)
+
+    def widgetUpdate(self):
+        widget.update()
 
     def cancelCreate(self):
         widget.setCurrentIndex(widget.currentIndex()-2)
@@ -195,8 +209,8 @@ class HomeworkList_T(QDialog):
         self.pushButton_registerHomework.clicked.connect(self.registerHWPage)
         self.pushButton_gradeHomework.clicked.connect(self.gradeHWPage)
 
-        for i in range(len(currentUser.getClassList.getHomeworkList())) :
-            self.listWidget.insertItem(i, currentUser.getClassList.getHomeworkList()[i])
+        #for i in range(len(currentUser.getClassList.getHomeworkList())) :
+            #self.listWidget.insertItem(i, currentUser.getClassList.getHomeworkList()[i])
     
     def registerHWPage(self):
         widget.setCurrentWidget(registerHWWindow)
@@ -317,7 +331,6 @@ if __name__ == "__main__":
     widget.addWidget(submitHWWindow)
     widget.addWidget(HWListParentWindow)
     widget.addWidget(checkHWWindow)
-
 
     #프로그램 화면을 보여주는 코드
     widget.setFixedHeight(400)
