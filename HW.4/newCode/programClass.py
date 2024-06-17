@@ -5,7 +5,6 @@ class Class:
     __parentList = {} # id: obj 
     __studentList = {} # id: obj 
     __homeworkList = {} # title: obj 
-    __noticeList = {} # title: obj 
     
     def __init__(self, className, code, teacherId):
         self.__className = className
@@ -32,11 +31,5 @@ class Class:
     
     def addHomework(self, title, homeworkObj):
         self.__homeworkList[title] = homeworkObj
-    
-    def getNoticeList(self):
-        return self.__noticeList
-    
-    def addNotice(self, title, noticeObj):
-        self.__noticeList[title] = noticeObj
     
     
