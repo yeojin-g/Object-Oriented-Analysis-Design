@@ -68,7 +68,7 @@
     <string>과제 채점</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_title">
+  <widget class="QLabel" name="label_score">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -78,10 +78,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>제목</string>
+    <string>점수</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_title">
+  <widget class="QLineEdit" name="lineEdit_score">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -91,7 +91,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_content">
+  <widget class="QLabel" name="label_comment">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -104,7 +104,7 @@
     <string>내용</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit_content">
+  <widget class="QTextEdit" name="textEdit_comment">
    <property name="geometry">
     <rect>
      <x>100</x>

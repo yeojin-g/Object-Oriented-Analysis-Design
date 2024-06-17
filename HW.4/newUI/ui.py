@@ -3,8 +3,8 @@ import os, sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.uic import loadUi
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'code'))
-from userAndPostCtrl import UserAndPostCtrl
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'newCode'))
+from userCtrl import UserCtrl
 
 currentUserInfo = []
 
@@ -29,11 +29,11 @@ class UserLogin(QDialog): # Login창
         self.buttonBox.rejected.connect(self.cancelLogin)
 
     def courseList(self):
-        userCtrl = UserAndPostCtrl()
+        userCtrl = UserCtrl()
         Id = self.lineEdit.text()
         pw = self.lineEdit_2.text()
 
-        loginSuccess = userCtrl.checkInfo(Id, pw)
+        loginSuccess = userCtrl.Login(Id, pw)
 
         if loginSuccess:
             QtWidgets.QMessageBox.information(self, 'Success', '로그인 성공.')
@@ -68,7 +68,7 @@ class UserRegister(QDialog): # SignIn창
         elif self.radioButton_3.isChecked():
             roleNum = 2
         
-        userCrtl = UserAndPostCtrl() # ctrl 객체 생성
+        userCrtl = UserCtrl() # ctrl 객체 생성
         currentUserInfo = [roleNum, name, Id, pw, email]
         isSuccess = userCrtl.signIn(roleNum, name, Id, pw, email) # signIn 수행
         print(currentUserInfo)
