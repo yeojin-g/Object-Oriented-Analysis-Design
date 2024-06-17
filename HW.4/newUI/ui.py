@@ -171,9 +171,25 @@ class SearchClass(QDialog): # 클래스 검색
         loadUi("SearchClass.ui", self)
         self.pushButton_search.clicked.connect(self.searchLogic)
         self.pushButton_joinClass.clicked.connect(self.joinLogic)
+        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setRowCount(1)
+        self.tableWidget.setHorizontalHeaderLabels(["클래스 이름", "교사 이름"])
 
     def searchLogic(self): # 클래스 검색 logic
+        classCtrl = ClassCtrl()
         className = self.lineEdit.text()
+        resultClass = classCtrl.searchClass(className)
+        print(resultClass)
+        for c in range(self.tableWidget.columnCount()):
+            if resultClass == False:
+                QtWidgets.QMessageBox.warning(self, 'Error', '입력한 클래스가 존재하지 않습니다.')
+                break
+            index = 0
+            item = QTableWidgetItem()
+            item.setText(resultClass[index])
+            self.tableWidget.setItem(0, c, item)
+            index += 2
+        self.tableWidget.repaint()
 
     def joinLogic(self): # 클래스 가입 logic
         widget.setCurrentIndex(widget.currentIndex()+2)
