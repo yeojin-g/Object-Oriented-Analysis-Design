@@ -5,8 +5,11 @@ from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.uic import loadUi
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'newCode'))
 from userCtrl import UserCtrl
+from user import User
+from classCtrl import ClassCtrl
 
 currentUserInfo = []
+currentUser = User(0, 0, 0, 0)
 
 class MainWindow(QDialog): # main창(first page)
     def __init__(self):
@@ -34,6 +37,7 @@ class UserLogin(QDialog): # Login창
         pw = self.lineEdit_2.text()
 
         loginSuccess = userCtrl.Login(Id, pw)
+        currentUser = userCtrl.Login(Id, pw)
 
         if loginSuccess:
             QtWidgets.QMessageBox.information(self, 'Success', '로그인 성공.')
@@ -86,6 +90,24 @@ class CourseList(QDialog): # 현재 user가 속한 CourseList 보여주는 창
         self.toolButton_searchClass.clicked.connect(self.searchClassPage)
         self.toolButton_createCourse.clicked.connect(self.createCoursePage)
         self.pushButton_enterClass.clicked.connect(self.enterCoursePage)
+        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setHorizontalHeaderLabels(["클래스 이름", "교사 이름"])
+
+        # 동적으로 추가할 로우 개수 5개
+        for r in range(len(currentUser.getClassList())):
+            # 동적 row 생성
+            self.tableWidget.insertRow(r)
+            # table.columnCount() : column 개수 리턴
+            for c in range(self.tableWidget.columnCount()):
+                # 테이블위젯아이템 생성
+                item = QTableWidgetItem()
+                # 아이템에 데이터 삽입
+                item.setText(str(r+c))
+                # 아이템을 테이블에 세팅
+                self.tableWidget.setItem(r, c, item)
+        
+        self.tableWidget.resizeRowsToContents()
+        self.tableWidget.resizeColumnsToContents()
 
     def searchClassPage(self): # 클래스 검색 
         if currentUserInfo[0] == 0:
@@ -131,6 +153,11 @@ class CreateClass(QDialog):
         self.buttonBox.rejected.connect(self.cancelCreate)
     
     def createLogic(self):  # 클래스 생성 logic
+        classCtrl = ClassCtrl()
+        name = self.lineEdit_className.text()
+        code = self.lineEdit_classCode.text()
+        teacherId = currentUser.getInfoList()[0]
+        classCtrl.makeClass(name, code, teacherId)
         widget.setCurrentIndex(widget.currentIndex()-2)
 
     def cancelCreate(self):
