@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QTableWidgetItem, QListWidget
 from PyQt5.uic import loadUi
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'newCode'))
 from userCtrl import UserCtrl
+from hwCtrl import HwCtrl
 from user import User
 from programClass import Class
 from classCtrl import ClassCtrl
@@ -12,7 +13,7 @@ from classCtrl import ClassCtrl
 currentUserInfo = []
 currentUser = User(0, 0, 0, 0)
 currentUserClassList = {}
-currentClassInfo = []
+currentClassListInfo = []
 currentClass = Class(0, 0, 0)
 currentHomeworkList = {}
 
@@ -105,21 +106,21 @@ class CourseList(QDialog): # 현재 user가 속한 CourseList 보여주는 창
 
     def widgetUpdate(self):
         global currentUserClassList
-        global currentClassInfo
+        global currentClassListInfo
         if len(currentUserClassList) != 0:
             self.tableWidget.setRowCount(len(currentUserClassList))
             for r in range(self.tableWidget.rowCount()):
                 currentUserClassList = currentUser.getClassList()
-                print(currentUserClassList)
+                #print(currentUserClassList)
                 for value in currentUserClassList.values():
-                    currentClassInfo.append(value)
-                    print(currentClassInfo)
+                    currentClassListInfo.append(value)
+                    #print(currentClassListInfo)
                 index = 0
                 for c in range(self.tableWidget.columnCount()):
                     # 테이블위젯아이템 생성
                     item = QTableWidgetItem()
                     # 아이템에 데이터 삽입
-                    item.setText(str(list(currentClassInfo[r].getClassInfo()[index])))
+                    item.setText(str(list(currentClassListInfo[r].getClassInfo()[index])))
                     index += 2
                     # 아이템을 테이블에 세팅
                     self.tableWidget.setItem(r, c, item)
@@ -136,7 +137,7 @@ class CourseList(QDialog): # 현재 user가 속한 CourseList 보여주는 창
 
         print("현재 선택 셀 값 : ", current_data.text())
 
-        currentClass = current_data
+        currentClass = currentUserClassList[currentClassListInfo[row].getClassInfo()[0]]
 
     def searchClassPage(self): # 클래스 검색 
         if currentUserInfo[0] == 0:
@@ -234,6 +235,7 @@ class HomeworkList_T(QDialog):
         global currentClass
         global currentHomeworkList
         currentHomeworkList = currentClass.getHomeworkList()
+
         print(currentHomeworkList)
         #self.listWidget.insertItem()
         self.listWidget.repaint()
@@ -265,7 +267,15 @@ class RegisterHW(QDialog):
         self.buttonBox.rejected.connect(self.cancelRegister)
 
     def successRegister(self): # 과제 등록 Logic
+        global currentClass
         global currentHomeworkList
+        hwCtrl = HwCtrl()
+        currentHomeworkList = currentClass.getHomeworkList()
+        print(currentHomeworkList)
+        title = self.lineEdit_title.text()
+        content = self.textEdit_content.toPlainText()
+        hwCtrl.regHw(title, content, currentClass)
+
         widget.setCurrentWidget(HWListTeacherWindow)
     def cancelRegister(self):
         widget.setCurrentWidget(HWListTeacherWindow)
