@@ -1,7 +1,7 @@
 # 프로그램 실행시 첫 메인화면
 import os, sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QDialog
+from PyQt5.QtWidgets import QApplication, QDialog, QTableWidgetItem, QListWidget
 from PyQt5.uic import loadUi
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'newCode'))
 from userCtrl import UserCtrl
@@ -92,22 +92,29 @@ class CourseList(QDialog): # 현재 user가 속한 CourseList 보여주는 창
         self.pushButton_enterClass.clicked.connect(self.enterCoursePage)
         self.tableWidget.setColumnCount(2)
         self.tableWidget.setHorizontalHeaderLabels(["클래스 이름", "교사 이름"])
+        self.setTable()
+        self.tableWidget.currentCellChanged.connect(self.currentcellchanged_event)
 
-        # 동적으로 추가할 로우 개수 5개
+    def currentcellchanged_event(self, row, col, pre_row, pre_col):
+        current_data = self.tableWidget.item(row, col) # 현재 선택 셀 값
+        pre_data = self.tableWidget.item(pre_row, pre_col) # 이전 선택 셀 값
+        if pre_data is not None:
+            print("이전 선택 셀 값 : ", pre_data.text())
+        else:
+            print("이전 선택 셀 값 : 없음")
+
+        print("현재 선택 셀 값 : ", current_data.text())
+
+    def setTable(self):
         for r in range(len(currentUser.getClassList())):
-            # 동적 row 생성
             self.tableWidget.insertRow(r)
-            # table.columnCount() : column 개수 리턴
             for c in range(self.tableWidget.columnCount()):
                 # 테이블위젯아이템 생성
                 item = QTableWidgetItem()
                 # 아이템에 데이터 삽입
-                item.setText(str(r+c))
+                item.setText(currentUser.getClassList.getClassInfo()[0])
                 # 아이템을 테이블에 세팅
                 self.tableWidget.setItem(r, c, item)
-        
-        self.tableWidget.resizeRowsToContents()
-        self.tableWidget.resizeColumnsToContents()
 
     def searchClassPage(self): # 클래스 검색 
         if currentUserInfo[0] == 0:
@@ -187,6 +194,9 @@ class HomeworkList_T(QDialog):
         loadUi("HomeworkList_teacher.ui", self)
         self.pushButton_registerHomework.clicked.connect(self.registerHWPage)
         self.pushButton_gradeHomework.clicked.connect(self.gradeHWPage)
+
+        for i in range(len(currentUser.getClassList.getHomeworkList())) :
+            self.listWidget.insertItem(i, currentUser.getClassList.getHomeworkList()[i])
     
     def registerHWPage(self):
         widget.setCurrentWidget(registerHWWindow)
@@ -307,6 +317,7 @@ if __name__ == "__main__":
     widget.addWidget(submitHWWindow)
     widget.addWidget(HWListParentWindow)
     widget.addWidget(checkHWWindow)
+
 
     #프로그램 화면을 보여주는 코드
     widget.setFixedHeight(400)
