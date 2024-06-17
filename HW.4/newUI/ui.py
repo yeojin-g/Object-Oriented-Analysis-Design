@@ -93,13 +93,14 @@ class CourseList(QDialog): # 현재 user가 속한 CourseList 보여주는 창
         self.tableWidget.setColumnCount(2)
         self.tableWidget.setRowCount(10)
         self.tableWidget.setHorizontalHeaderLabels(["클래스 이름", "교사 이름"])
+
         for r in range(self.tableWidget.rowCount()):
             index = 0
             for c in range(self.tableWidget.columnCount()):
                 # 테이블위젯아이템 생성
                 item = QTableWidgetItem()
                 # 아이템에 데이터 삽입
-                item.setText(currentUser.getClassList()[getClassInfo()[index]])
+                item.setText(values.getClassInfo()[index])
                 index += 2
                 # 아이템을 테이블에 세팅
                 self.tableWidget.setItem(r, c, item)
@@ -207,7 +208,7 @@ class HomeworkList_T(QDialog):
         self.pushButton_registerHomework.clicked.connect(self.registerHWPage)
         self.pushButton_gradeHomework.clicked.connect(self.gradeHWPage)
 
-        self.listWidget.insertItem(i, currentUser.getClassList.getHomeworkList()[0])
+        #self.listWidget.insertItem(i, currentUser.getClassList.getHomeworkList()[i])
     
     def registerHWPage(self):
         widget.setCurrentWidget(registerHWWindow)
