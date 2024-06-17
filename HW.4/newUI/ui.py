@@ -118,7 +118,8 @@ class SearchClass(QDialog): # 클래스 검색
         self.pushButton_joinClass.clicked.connect(self.joinLogic)
 
     def searchLogic(self): # 클래스 검색 logic
-        pass
+        className = self.lineEdit.text()
+        
 
     def joinLogic(self): # 클래스 가입 logic
         widget.setCurrentIndex(widget.currentIndex()+2)
