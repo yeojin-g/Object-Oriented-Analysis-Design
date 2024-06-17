@@ -119,7 +119,6 @@ class SearchClass(QDialog): # 클래스 검색
 
     def searchLogic(self): # 클래스 검색 logic
         className = self.lineEdit.text()
-        
 
     def joinLogic(self): # 클래스 가입 logic
         widget.setCurrentIndex(widget.currentIndex()+2)
@@ -143,6 +142,8 @@ class WriteClasscode(QDialog):
         loadUi("write_classcode.ui", self)
         self.buttonBox.accepted.connect(self.successJoin)
         self.buttonBox.rejected.connect(self.cancelJoin)
+
+        classCode = self.lineEdit_classCode.text()
     
     def successJoin(self):
         widget.setCurrentIndex(widget.currentIndex()+2)
