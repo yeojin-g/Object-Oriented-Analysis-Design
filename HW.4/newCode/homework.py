@@ -1,7 +1,7 @@
 class Homework:
     __title = ""
     __content = ""
-    __submitStudentList = {} #name : pHomework
+    __submitStudentList = {} #id : pHomework
     
     def __init__(self, title, content):
         self.__title = title
@@ -10,5 +10,5 @@ class Homework:
     def getSubmitStudentList(self):
         return self.__submitStudentList
     
-    def addStudent(self):
-        pass
+    def addStudent(self, userName, pHwObj):
+        self.__submitStudentList[userName] = pHwObj
