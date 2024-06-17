@@ -143,6 +143,7 @@ class WriteClasscode(QDialog):
         self.buttonBox.accepted.connect(self.successJoin)
         self.buttonBox.rejected.connect(self.cancelJoin)
 
+    def checkClassCode(self, code) :
         classCode = self.lineEdit_classCode.text()
     
     def successJoin(self):
