@@ -50,11 +50,11 @@ class ClassCtrl:
     def searchHw(self, title, classObj):
         homeworkList = classObj.getHomeworkList()
         
-        if title in homeworkList.keys:
+        if title in homeworkList.keys():
             return homeworkList[title]
         else:
             print("해당 제목의 과제가 존재하지 않습니다.")
             return False
         
-    def addHomework(title, homeworkObj, classObj):
+    def addHomework(self, title, homeworkObj, classObj):
         classObj.addHomework(title, homeworkObj)

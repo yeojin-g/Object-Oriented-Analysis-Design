@@ -8,7 +8,7 @@ class HwCtrl:
     classCtrl = ClassCtrl()
     
     def regHw(self, title, content, classObj):
-        if self.classCtrl.searchHw(title):
+        if self.classCtrl.searchHw(title, classObj):
             print("동일한 내용의 과제가 이미 존재합니다.")
             return False
         else:
