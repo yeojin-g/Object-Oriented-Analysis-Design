@@ -33,11 +33,11 @@ class HwCtrl:
             print("error")
             return False
         
-    def checkHw(self, childName, hwObj):
+    def checkHw(self, childId, hwObj):
         stdList = hwObj.getSubmitStudentList()
         
-        if childName in stdList:
-            return stdList[childName]
+        if childId in stdList:
+            return stdList[childId]
         else:
             print("제출된 과제가 존재하지 않습니다.")
             return False
