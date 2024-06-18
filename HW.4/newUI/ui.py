@@ -18,11 +18,12 @@ currentClassListInfo = []
 currentClass = Class(0, 0, 0)
 currentHomeworkList = {}
 currentHomeworkListInfo = []
+currentHomework = Homework(0, 0)
 
-#testClass = Class("a", "b", "c")
+testClass = Class("a", "b", "c")
 #testHomework = Homework("d", "e")
 #testClass.addHomework("d", testHomework)
-searchResultClass = None
+#searchResultClass = None
 
 class MainWindow(QDialog): # main창(first page)
     def __init__(self):
@@ -189,7 +190,6 @@ class SearchClass(QDialog): # 클래스 검색
         #classCtrl.makeClass(testClass.getClassInfo()[0], testClass.getClassInfo()[1], testClass.getClassInfo()[2])
         className = self.lineEdit.text()
         resultClass = classCtrl.searchClass(className)
-        print(searchResultClass)
         index = 0
         for c in range(self.tableWidget.columnCount()):
             if resultClass == False:
@@ -241,9 +241,17 @@ class WriteClasscode(QDialog):
         self.buttonBox.rejected.connect(self.cancelJoin)
     
     def successJoin(self):
+        global currentUserInfo
+        global currentUser
+        global currentClass
         classCtrl = ClassCtrl()
         classCode = self.lineEdit_classCode.text()
         classCtrl.joinClass(currentUserInfo[0], currentUserInfo[1], currentUser, currentClass, classCode)
+        print(currentClass)
+        #if classCtrl.joinClass(currentUserInfo[0], currentUserInfo[1], currentUser, currentClass, classCode) == False:
+            #QtWidgets.QMessageBox.warning(self, 'Error', '코드가 맞지 않습니다.')
+            #self.repaint()
+        #else:
         widget.setCurrentIndex(widget.currentIndex()+2)
 
     def cancelJoin(self):
@@ -255,19 +263,38 @@ class HomeworkList_T(QDialog):
         loadUi("HomeworkList_teacher.ui", self)
         self.pushButton_registerHomework.clicked.connect(self.registerHWPage)
         self.pushButton_gradeHomework.clicked.connect(self.gradeHWPage)
-        widget.currentChanged.connect(self.widgetUpdate)
-
-    def widgetUpdate(self):
+        self.listWidget.itemClicked.connect(self.currentHW)
+        #widget.currentChanged.connect(self.widgetUpdate)
         global currentClass
         global currentHomeworkList
         global currentHomeworkListInfo
         currentHomeworkList = currentClass.getHomeworkList()
         print(currentHomeworkList)
-        for i in range(len(currentHomeworkList)):
-            if len(currentHomeworkList) != 0:
-                for value in currentHomeworkList.values():
-                    currentHomeworkListInfo.append(value)
-                    print(currentHomeworkListInfo)
+        for value in currentHomeworkList.values():
+            currentHomeworkListInfo.append(value)
+            print(currentHomeworkListInfo)
+        if len(currentHomeworkList) != 0:
+            for i in range(len(currentHomeworkList)):
+                self.listWidget.addItem(currentHomeworkListInfo[i].getHomeworktitle())
+
+    def currentHW(self):
+        global currentHomeworkList
+        currentHWtitle = self.listWidget.currentItem().text()
+        currentHomework = currentHomeworkList[currentHWtitle]
+
+
+    def widgetUpdate(self):
+        global currentClass
+        global currentHomeworkList
+        global currentHomeworkListInfo
+        self.label_className.setText(str(currentClassListInfo[0].getClassInfo()[0]))
+        currentHomeworkList = currentClass.getHomeworkList()
+        print(currentHomeworkList)
+        for value in currentHomeworkList.values():
+            currentHomeworkListInfo.append(value)
+            print(currentHomeworkListInfo)
+        if len(currentHomeworkList) != 0:
+            for i in range(len(currentHomeworkList)):
                 self.listWidget.addItem(currentHomeworkListInfo[i].getHomeworktitle())
                 self.listWidget.repaint()
     
@@ -300,12 +327,17 @@ class RegisterHW(QDialog):
     def successRegister(self): # 과제 등록 Logic
         global currentClass
         global currentHomeworkList
+        self.label_courseName.setText(str(currentClassListInfo[0].getClassInfo()[0]))
         hwCtrl = HwCtrl()
         currentHomeworkList = currentClass.getHomeworkList()
         print(currentHomeworkList)
         title = self.lineEdit_title.text()
         content = self.textEdit_content.toPlainText()
         hwCtrl.regHw(title, content, currentClass)
+
+        global currentHomeworkListInfo
+        HWListTeacherWindow.listWidget.addItem(title)
+        HWListTeacherWindow.listWidget.repaint()
 
         widget.setCurrentWidget(HWListTeacherWindow)
     def cancelRegister(self):
@@ -319,6 +351,8 @@ class GradeHW(QDialog):
         self.buttonBox.rejected.connect(self.cancelGrade)
 
     def successGrade(self):
+        score = self.lineEdit_score.text()
+        comment = self.textEdit_comment.toPlainText()
         widget.setCurrentWidget(HWListTeacherWindow)
 
     def cancelGrade(self):

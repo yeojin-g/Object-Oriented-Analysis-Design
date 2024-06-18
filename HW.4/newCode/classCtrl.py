@@ -5,6 +5,9 @@ from userCtrl import UserCtrl
 class ClassCtrl:
     dbCtrl = DBManager()
     userCtrl = UserCtrl()
+    testClass = Class("a", "b", "c")
+    dbCtrl.addClass("a", testClass)
+    
     
     def makeClass(self, className, code, teacherId):
         if not self.dbCtrl.searchClass(className): # 해당 이름의 class가 존재하지 않을 때
@@ -31,6 +34,7 @@ class ClassCtrl:
     def joinClass(self, roleNum, userId, userObj, classObj, code):
         className = classObj.getClassInfo()[0]
         classCode = classObj.getClassInfo()[1]
+        print(classObj)
         print(className)
         print(classCode)
         
