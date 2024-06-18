@@ -6,7 +6,7 @@ from dbManager import DBManager
 class UserCtrl:
     dbCtrl = DBManager()
     
-    def signIn(self, roleNum, name, id, pw, email, childName = ""):
+    def signIn(self, roleNum, name, id, pw, email, childId = ""):
         newUser = None
         
         if not self.dbCtrl.searchUser(id):
@@ -15,7 +15,13 @@ class UserCtrl:
             elif roleNum == 1: #student
                 newUser = Student(name, id, pw, email)
             elif roleNum == 2: #parent
-                newUser == Parent(name, id, pw, email, childName)
+                curChild = self.dbCtrl.searchUser(childId)
+                if curChild:
+                    newUser == Parent(name, id, pw, email, childId)
+                    curChild.setParentId(id)
+                else:
+                    print("해당 ID의 자녀가 존재하지 않습니다.")
+                    return False
             else:
                 print("잘못된 role입니다.")
                 return False

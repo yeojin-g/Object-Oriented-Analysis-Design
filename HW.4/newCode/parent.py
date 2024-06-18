@@ -2,11 +2,11 @@ from typing import Any
 from user import User
 
 class Parent(User):
-    __childName = ""
+    __childId = ""
     
-    def __init__(self, name, id, pw, email, childName):
+    def __init__(self, name, id, pw, email, childId):
         super().__init__(name, id, pw, email)
-        self.__childName = childName
+        self.__childId = childId
         
-    def getChildName(self):
-        return self.__childName
+    def getChildId(self):
+        return self.__childId
