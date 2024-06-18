@@ -1,5 +1,7 @@
+from programClass import Class
+
 class DBManager:
-    __classList = {} # className: classObj
+    __classList = {"123": Class("123", "123", "123")} # className: classObj
     __userList = {} # userId: [roleNum, userObj]
     
     

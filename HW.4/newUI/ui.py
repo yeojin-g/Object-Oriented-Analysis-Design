@@ -186,9 +186,9 @@ class SearchClass(QDialog): # 클래스 검색
         global searchResultClass
         global testClass
         classCtrl = ClassCtrl()
-        classCtrl.makeClass(testClass.getClassInfo()[0], testClass.getClassInfo()[1], testClass.getClassInfo()[2])
+        #classCtrl.makeClass(testClass.getClassInfo()[0], testClass.getClassInfo()[1], testClass.getClassInfo()[2])
         className = self.lineEdit.text()
-        searchResultClass = classCtrl.searchClass(className)
+        resultClass = classCtrl.searchClass(className)
         print(searchResultClass)
         index = 0
         for c in range(self.tableWidget.columnCount()):
