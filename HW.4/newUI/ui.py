@@ -255,7 +255,6 @@ class HomeworkList_T(QDialog):
         loadUi("HomeworkList_teacher.ui", self)
         self.pushButton_registerHomework.clicked.connect(self.registerHWPage)
         self.pushButton_gradeHomework.clicked.connect(self.gradeHWPage)
-        #self.listWidget.insertItem(currentClass.getHomeworkList())
         widget.currentChanged.connect(self.widgetUpdate)
 
     def widgetUpdate(self):
@@ -263,11 +262,13 @@ class HomeworkList_T(QDialog):
         global currentHomeworkList
         global currentHomeworkListInfo
         currentHomeworkList = currentClass.getHomeworkList()
-
         print(currentHomeworkList)
-        
-        #self.listWidget.insertItem()
-        self.listWidget.repaint()
+        if len(currentHomeworkList) != 0:
+            for value in currentHomeworkList.values():
+                currentHomeworkListInfo.append(value)
+                print(currentHomeworkListInfo)
+            self.listWidget.addItem(currentHomeworkListInfo[0])
+            self.listWidget.repaint()
     
     def registerHWPage(self):
         widget.setCurrentWidget(registerHWWindow)
