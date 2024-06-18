@@ -6,6 +6,9 @@ class Homework:
     def __init__(self, title, content):
         self.__title = title
         self.__content = content
+
+    def getHomeworktitle(self):
+        return self.__title
         
     def getSubmitStudentList(self):
         return self.__submitStudentList

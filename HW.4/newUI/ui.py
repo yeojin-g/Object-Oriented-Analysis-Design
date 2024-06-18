@@ -19,9 +19,9 @@ currentClass = Class(0, 0, 0)
 currentHomeworkList = {}
 currentHomeworkListInfo = []
 
-testClass = Class("a", "b", "c")
-testHomework = Homework("d", "e")
-testClass.addHomework("d", testHomework)
+#testClass = Class("a", "b", "c")
+#testHomework = Homework("d", "e")
+#testClass.addHomework("d", testHomework)
 searchResultClass = None
 
 class MainWindow(QDialog): # main창(first page)
@@ -263,12 +263,13 @@ class HomeworkList_T(QDialog):
         global currentHomeworkListInfo
         currentHomeworkList = currentClass.getHomeworkList()
         print(currentHomeworkList)
-        if len(currentHomeworkList) != 0:
-            for value in currentHomeworkList.values():
-                currentHomeworkListInfo.append(value)
-                print(currentHomeworkListInfo)
-            self.listWidget.addItem(currentHomeworkListInfo[0])
-            self.listWidget.repaint()
+        for i in range(len(currentHomeworkList)):
+            if len(currentHomeworkList) != 0:
+                for value in currentHomeworkList.values():
+                    currentHomeworkListInfo.append(value)
+                    print(currentHomeworkListInfo)
+                self.listWidget.addItem(currentHomeworkListInfo[i].getHomeworktitle())
+                self.listWidget.repaint()
     
     def registerHWPage(self):
         widget.setCurrentWidget(registerHWWindow)
