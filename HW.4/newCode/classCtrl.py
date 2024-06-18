@@ -29,8 +29,10 @@ class ClassCtrl:
             return False
         
     def joinClass(self, roleNum, userId, userObj, classObj, code):
-        className = classObj.getClassInfo[0]
-        classCode = classObj.getClassInfo[1]
+        className = classObj.getClassInfo()[0]
+        classCode = classObj.getClassInfo()[1]
+        print(className)
+        print(classCode)
         
         if classCode == code:
             print("코드 일치, 가입 성공")

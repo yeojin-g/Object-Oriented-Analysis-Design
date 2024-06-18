@@ -9,6 +9,7 @@ from hwCtrl import HwCtrl
 from user import User
 from programClass import Class
 from classCtrl import ClassCtrl
+from homework import Homework
 
 currentUserInfo = []
 currentUser = User(0, 0, 0, 0)
@@ -16,6 +17,12 @@ currentUserClassList = {}
 currentClassListInfo = []
 currentClass = Class(0, 0, 0)
 currentHomeworkList = {}
+currentHomeworkListInfo = []
+
+testClass = Class("a", "b", "c")
+testHomework = Homework("d", "e")
+testClass.addHomework("d", testHomework)
+searchResultClass = None
 
 class MainWindow(QDialog): # main창(first page)
     def __init__(self):
@@ -176,20 +183,24 @@ class SearchClass(QDialog): # 클래스 검색
         self.tableWidget.setHorizontalHeaderLabels(["클래스 이름", "교사 이름"])
 
     def searchLogic(self): # 클래스 검색 logic
+        global searchResultClass
+        global testClass
         classCtrl = ClassCtrl()
+        classCtrl.makeClass(testClass.getClassInfo()[0], testClass.getClassInfo()[1], testClass.getClassInfo()[2])
         className = self.lineEdit.text()
-        resultClass = classCtrl.searchClass(className)
-        print(resultClass)
+        searchResultClass = classCtrl.searchClass(className)
+        print(searchResultClass)
+        index = 0
         for c in range(self.tableWidget.columnCount()):
             if resultClass == False:
                 QtWidgets.QMessageBox.warning(self, 'Error', '입력한 클래스가 존재하지 않습니다.')
                 break
-            index = 0
             item = QTableWidgetItem()
-            item.setText(resultClass[index])
+            item.setText(resultClass.getClassInfo()[index])
             self.tableWidget.setItem(0, c, item)
             index += 2
         self.tableWidget.repaint()
+        currentClass = resultClass
 
     def joinLogic(self): # 클래스 가입 logic
         widget.setCurrentIndex(widget.currentIndex()+2)
@@ -228,11 +239,11 @@ class WriteClasscode(QDialog):
         loadUi("write_classcode.ui", self)
         self.buttonBox.accepted.connect(self.successJoin)
         self.buttonBox.rejected.connect(self.cancelJoin)
-
-    def checkClassCode(self, code) :
-        classCode = self.lineEdit_classCode.text()
     
     def successJoin(self):
+        classCtrl = ClassCtrl()
+        classCode = self.lineEdit_classCode.text()
+        classCtrl.joinClass(currentUserInfo[0], currentUserInfo[1], currentUser, currentClass, classCode)
         widget.setCurrentIndex(widget.currentIndex()+2)
 
     def cancelJoin(self):
@@ -250,9 +261,11 @@ class HomeworkList_T(QDialog):
     def widgetUpdate(self):
         global currentClass
         global currentHomeworkList
+        global currentHomeworkListInfo
         currentHomeworkList = currentClass.getHomeworkList()
 
         print(currentHomeworkList)
+        
         #self.listWidget.insertItem()
         self.listWidget.repaint()
     
