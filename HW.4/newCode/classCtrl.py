@@ -14,6 +14,7 @@ class ClassCtrl:
             teacherObj = self.dbCtrl.searchUser(teacherId)
             self.userCtrl.joinClass(teacherObj, className, newClass) # teacherClassList에 추가
             print("클래스 생성 성공")
+            return True
         else:
             print("해당 이름의 클래스가 이미 존재합니다.")
             return False
